@@ -1,0 +1,750 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="only light">
+<title>The Draw: Political Philosophies</title>
+<style>
+:root{color-scheme:only light;--ink:#1f2328;--mute:#5b6168;--line:#d6d9dc;--bg:#f5f4f0;--card:#fff;--ok:#18794e;--okbg:#e1f4e8;--bad:#b3261e;--badbg:#fbe8e6;--pc:#2f3337;--pt:#eef0f1}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+#app{max-width:780px;margin:0 auto;padding:16px 16px 64px}
+#app.wide{max-width:1500px}
+h1{font-size:30px;line-height:1.15;margin:8px 0 4px;letter-spacing:-.01em}
+h2{font-size:19px;margin:0 0 8px}
+p{margin:0 0 10px}
+.mute{color:var(--mute)}
+.small{font-size:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px;margin:12px 0}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.grow{flex:1}
+button{font:inherit;color:inherit;cursor:pointer}
+.btn{background:#fff;border:1px solid #b9bec3;border-radius:8px;padding:9px 14px;font-weight:600}
+.btn:hover{background:#f1f2f3}
+.btn.primary{background:#2f3337;border-color:#2f3337;color:#fff}
+.btn.primary:hover{background:#17191b}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.link{border:0;background:none;padding:4px 0;color:var(--mute);font-weight:500;text-decoration:underline}
+.label{font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--mute);margin:0 0 6px}
+.step{margin-top:18px}
+.policy{border-left:6px solid var(--pc);background:var(--card);border-radius:10px;border-top:1px solid var(--line);border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:14px 16px;margin:12px 0}
+.policy .title{font-size:22px;font-weight:700;line-height:1.25;margin:2px 0 10px}
+.chip{display:inline-block;background:var(--pc);color:#fff;border-radius:999px;padding:3px 12px;font-weight:700;font-size:14px}
+.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+@media(max-width:560px){.cols{grid-template-columns:repeat(2,1fr)}}
+.choice{background:#fff;border:1.5px solid #b9bec3;border-radius:8px;padding:10px;text-align:left;font-weight:600;line-height:1.25}
+.choice .n{color:var(--mute);font-weight:700;margin-right:6px}
+.choice:hover{border-color:var(--pc)}
+.choice.sel{border-color:var(--pc);background:var(--pt);box-shadow:inset 0 0 0 1px var(--pc)}
+.choice:disabled{cursor:default;opacity:.75}
+.choice:disabled:hover{border-color:#b9bec3}
+.choice.sel:disabled{opacity:1;border-color:var(--pc)}
+.thesis{border-left:4px solid var(--pc);background:var(--pt);padding:10px 12px;border-radius:0 8px 8px 0;margin-top:8px}
+.thesis .who{font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--pc)}
+.pick2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+@media(max-width:560px){.pick2{grid-template-columns:1fr}}
+.pick2 .choice{font-weight:500}
+.verd{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.verd .choice,.phils .choice{text-align:center}
+.phils{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+textarea,input[type=text]{width:100%;font:inherit;color:var(--ink);background:#fff;border:1.5px solid #b9bec3;border-radius:8px;padding:9px 10px}
+textarea{min-height:70px;resize:vertical}
+textarea:focus,input:focus{outline:2px solid var(--pc);outline-offset:1px}
+.arg{display:grid;grid-template-columns:34px 1fr;gap:4px 8px;margin:6px 0}
+.arg b{color:var(--mute)}
+.tag{display:inline-block;border-radius:6px;padding:2px 9px;font-weight:700;font-size:14px;border:1px solid var(--line);background:#fff;margin:0 6px 6px 0}
+.tag.ok{background:var(--okbg);border-color:var(--ok);color:var(--ok)}
+.tag.bad{background:var(--badbg);border-color:var(--bad);color:var(--bad)}
+.model{border:1.5px solid var(--pc);border-radius:10px;padding:14px 16px;margin:12px 0;background:#fff}
+.quote{font-size:20px;line-height:1.45;font-style:italic;border-left:5px solid #8a8f94;padding:4px 0 4px 14px;margin:10px 0}
+.score{font-weight:700}
+.home{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:620px){.home{grid-template-columns:1fr}}
+.code{font:700 64px/1 ui-monospace,Menlo,Consolas,monospace;letter-spacing:.12em}
+.hostbar{display:flex;gap:16px;flex-wrap:wrap;align-items:center;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 16px}
+.hostbar select{font:inherit;padding:8px;border-radius:8px;border:1px solid #b9bec3;background:#fff;max-width:260px}
+.big .title{font-size:34px}
+.big .chip{font-size:20px;padding:5px 16px}
+.timer{font:700 34px/1 ui-monospace,Menlo,Consolas,monospace}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;margin-top:12px}
+.entry{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px;cursor:pointer}
+.entry:hover{border-color:#8a8f94}
+.entry .num{font:700 15px ui-monospace,Menlo,Consolas,monospace;color:var(--mute);margin-bottom:6px}
+.entry .p1{color:var(--mute);font-size:14px}
+.overlay{position:fixed;inset:0;background:rgba(20,22,24,.72);display:flex;align-items:center;justify-content:center;padding:24px;z-index:10}
+.overlay .entry{max-width:1000px;width:100%;font-size:26px;line-height:1.4;padding:28px;cursor:default}
+.overlay .entry .p1{font-size:22px}
+.overlay .tag{font-size:20px}
+.bars{display:grid;gap:10px;margin-top:12px}
+.bar{display:grid;grid-template-columns:190px 1fr 40px;gap:10px;align-items:center;font-weight:700}
+.bar i{display:block;height:30px;border-radius:6px;background:#b9bec3;min-width:2px}
+.bar.ok i{background:var(--ok)}
+.note{background:#fff8e1;border:1px solid #e6cf7a;border-radius:8px;padding:10px 12px;font-size:14px}
+.err{color:var(--bad);font-weight:600}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+/* =====================================================================
+   LIVE CLASS MODE
+   Paste your Firebase web-app config between the braces to switch on
+   live class mode, e.g.
+   const FIREBASE_CONFIG = { apiKey:"...", authDomain:"...", projectId:"...",
+     storageBucket:"...", messagingSenderId:"...", appId:"..." };
+   While it is null, class mode runs in demo mode: host and students must
+   be tabs in the same browser on the same device.
+   ===================================================================== */
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyDApHhmkS3H13tvl0XcnWcNIaCyB94F86Q",
+  authDomain: "ea---the-draw.firebaseapp.com",
+  projectId: "ea---the-draw",
+  storageBucket: "ea---the-draw.firebasestorage.app",
+  messagingSenderId: "51723996041",
+  appId: "1:51723996041:web:946d81171210eee5236f58"
+};
+const FIREBASE_VERSION = '10.12.2';
+
+/* ============================ CONTENT ============================ */
+const COLS = ['Need and source','Optimal form','Limits','Individual vs collective','Property','Principles'];
+const VERD = {S:'Support',O:'Oppose',C:'Conditional'};
+const PHIL = {
+  soc:{name:'Socialism',thinkers:'Marx · Owen',color:'#B03A2E',tint:'#FBEFED'},
+  sl:{name:'Social liberalism',thinkers:'Green · Rawls',color:'#1F7A7A',tint:'#E8F4F4'},
+  lib:{name:'Libertarianism',thinkers:'Locke · Nozick',color:'#9A5F0A',tint:'#FCF3E3'},
+  an:{name:'Anarchism',thinkers:'Bakunin · Rothbard',color:'#3A3F44',tint:'#EFF0F1'}
+};
+const PK = ['soc','sl','lib','an'];
+// POSTER[phil][column] = one or two [thinker, thesis] pairs, exactly as on the poster
+const POSTER = {
+soc:[
+ [['Marx',`The state is not neutral: it exists to secure the rule of the economically dominant class.`],['Owen',`Government is a legitimate instrument of rational reform, because it controls the circumstances that form character.`]],
+ [['Marx',`A transitional proletarian state must give way to a classless, stateless association.`],['Owen',`Society should be reorganised into small, self-governing co-operative communities.`]],
+ [['Marx',`In the transition, proletarian power should not be limited by bourgeois property rights.`],['Owen',`Government should prevent wrongdoing through education rather than punish it, since no one forms their own character.`]],
+ [['Marx',`Individual flourishing is possible only through the collective transformation of social conditions.`]],
+ [['Marx',`Private ownership of productive property sets people against one another and must be replaced by common ownership.`]],
+ [['Marx',`Goods should be distributed according to need, not contribution.`]]],
+sl:[
+ [['Green',`The state’s authority rests on citizens’ shared recognition of a common good, not on coercion.`],['Rawls',`Legitimate principles are those free and equal persons would choose without knowing their place in society.`]],
+ [['Rawls',`A constitutional democracy that secures equal liberties and disperses ownership best realises justice.`]],
+ [['Green',`The state cannot make people moral; its power is limited to removing obstacles to self-realisation.`]],
+ [['Green',`There is no real conflict: individual self-realisation is the common good.`],['Rawls',`Individuals cannot be sacrificed for aggregate welfare.`]],
+ [['Rawls',`Inequalities are just only if they work to the greatest benefit of the least advantaged.`]],
+ [['Green',`Freedom is a positive capacity to do things worth doing, not merely the absence of interference.`],['Rawls',`Justice, understood as fairness, is the primary standard for judging social institutions.`]]],
+lib:[
+ [['Locke',`Government exists to protect property and is legitimate only by consent.`],['Nozick',`A minimal state can arise legitimately without consent, provided no rights are violated along the way.`]],
+ [['Nozick',`Only a minimal, night-watchman state is justified; anything more extensive violates rights.`]],
+ [['Locke',`Individuals hold pre-political rights that no government may override.`]],
+ [['Nozick',`Only individuals have rights and interests; “society” cannot justify sacrificing one person for others.`]],
+ [['Locke',`Mixing one’s labour with unowned resources creates property, provided enough is left for others.`],['Nozick',`A holding is just if justly acquired or freely transferred, whatever the resulting pattern.`]],
+ [['Locke',`Liberty grounded in self-ownership is the organising principle of society.`]]],
+an:[
+ [['Bakunin',`The state has no rightful claim to rule; the only legitimate authority is freely accepted and revocable.`]],
+ [['Bakunin',`Society should be organised from the bottom up through free federation.`],['Rothbard',`Protection and justice should be supplied by competing firms in a free market.`]],
+ [['Rothbard',`No limit can make state power safe: the state is always the final judge of its own powers.`]],
+ [['Bakunin',`Individual freedom is social: no one is free unless all are.`],['Rothbard',`Only individuals exist and act; “society” has no claims over them.`]],
+ [['Bakunin',`Land and the instruments of labour should be held collectively; each worker receives the product of their labour.`],['Rothbard',`Property acquired by homesteading or voluntary exchange is absolute.`]],
+ [['Bakunin',`Liberty and equality cannot be separated.`],['Rothbard',`No one may initiate force against another’s person or property.`]]]
+};
+const POLICIES = [
+ `Ban on e-scooters and e-bikes for unlicensed riders`,
+ `Annual 2% wealth tax on net assets over $10m, funding public housing`,
+ `Flat income tax: everyone pays 20%`,
+ `Free university for all, funded from general taxation`,
+ `Universal basic income of $500 a week`,
+ `Replace Medicare with compulsory private health insurance`,
+ `Nationalise the electricity grid`,
+ `Ban on social media accounts for under-16s`,
+ `Compulsory voting, with fines for not voting`,
+ `No vaccination, no childcare enrolment`,
+ `Police may search anyone in designated areas without a warrant`,
+ `Replace local councils with residents’ assemblies making binding decisions`
+];
+/* ENTRIES[policy][phil]:
+   a  = accepted answers [column, thinker (0 = unsplit cell), verdict]; a[0] is the model answer
+   p2, c = model bridging premise and conclusion; sp = Who's Talking speech
+   nm = [near-miss philosophy, why]; split = note where the other thinker (or column) differs */
+const ENTRIES = [
+{ // 1 e-scooters
+soc:{a:[[2,'Owen','C']],
+ p2:`A licence prevents dangerous riding only if it trains riders; enforced through fines alone, it punishes people for habits they were never taught to avoid.`,
+ c:`The ban is justified only if the licence is training, not penalty.`,
+ sp:`No young rider chose to be careless; nobody taught them otherwise. Train them before they ride and you will have no one left to fine.`,
+ nm:['sl',`it supports the law to remove a danger to others, not because character is formed by circumstances.`]},
+sl:{a:[[2,0,'S'],[0,'Rawls','C']],
+ p2:`Injury caused by untrained riders is an obstacle to the self-realisation of pedestrians and riders, and a licence requirement removes it.`,
+ c:`The ban is a legitimate use of state power.`,
+ sp:`A law like this does not make anyone good, and it should not try. It clears a danger out of the way so that everyone on the footpath, the rider included, can get on with making the best of themselves.`,
+ nm:['lib',`it judges the law by rights and consent, not by self-development.`],
+ split:`Rawls is conditional (Need and source): persons choosing without knowing their place would accept a licence rule only if the licence were affordable to everyone.`},
+lib:{a:[[1,0,'O'],[2,0,'O'],[0,'Locke','S']],
+ p2:`The ban prohibits riding that has violated no one’s rights, on the ground that it might cause harm.`,
+ c:`The ban goes beyond the minimal state and violates riders’ rights.`,
+ sp:`The unlicensed rider has not used force, stolen or defrauded anyone. A state that stops her anyway, because of what might happen, has stopped being a night-watchman and become a guardian.`,
+ nm:['an',`it rejects the state itself, not only its excess.`],
+ split:`Locke supports (Need and source): the ban protects life and health and is made by an elected legislature.`},
+an:{a:[[0,0,'O'],[5,'Rothbard','O']],
+ p2:`The ban is imposed by the state under threat of penalty; riders have not freely accepted it and cannot revoke it.`,
+ c:`The ban is not a legitimate exercise of authority.`,
+ sp:`I will gladly take a riding instructor’s advice, because I can weigh it and walk away from it. A rule handed down by the state and backed by a fine is command, not expertise.`,
+ nm:['lib',`it accepts a state that keeps to protecting rights.`]}
+},
+{ // 2 wealth tax
+soc:{a:[[5,0,'S'],[4,0,'C']],
+ p2:`The tax moves resources from people who hold far more than they need to people who lack housing.`,
+ c:`The tax brings distribution closer to need.`,
+ sp:`A person with ten million has long since run out of needs to spend it on, and a family without a home has one need that crowds out all the rest. Moving wealth from the first to the second is what distribution is for.`,
+ nm:['sl',`it accepts large fortunes in principle and judges the tax by its effect on the least advantaged.`],
+ split:`From the Property column the verdict is conditional: the tax leaves productive property in private hands, so it is a first step only.`},
+sl:{a:[[4,0,'S'],[5,'Green','S']],
+ p2:`Fortunes left untaxed while people lack housing do not work to the greatest benefit of the least advantaged; taxing them to fund public housing improves that group’s position.`,
+ c:`The tax makes the distribution more just.`,
+ sp:`Great fortunes are acceptable only when the arrangement that permits them also does the most for those at the bottom. Fortunes left untaxed while people go unhoused fail that test.`,
+ nm:['soc',`it distributes by need and does not accept large private fortunes on any terms.`]},
+lib:{a:[[4,'Nozick','O'],[0,'Locke','O'],[1,0,'O'],[3,0,'O']],
+ p2:`The tax takes from holdings because of their size, not because of any injustice in how they arose.`,
+ c:`The tax takes just holdings and is therefore unjust.`,
+ sp:`Nobody is asking how these fortunes were made, only how big they are. If each was earned or given fairly, its size is no one’s grievance.`,
+ nm:['an',`for anarchism all tax is theft, whatever its target.`]},
+an:{a:[[4,'Rothbard','O'],[5,'Rothbard','O'],[4,'Bakunin','O'],[0,0,'O']],
+ p2:`The wealth tax takes such property without the owner’s consent.`,
+ c:`The wealth tax is theft.`,
+ sp:`If a gang took two per cent of your savings every year and spent it on housing, you would call it robbery however good the houses were. The size of the gang does not change the name of the act.`,
+ nm:['lib',`it objects to redistribution but accepts tax for a minimal state.`]}
+},
+{ // 3 flat tax
+soc:{a:[[5,0,'O']],
+ p2:`A flat tax takes the same share from everyone regardless of need.`,
+ c:`A flat tax distributes its burden by the wrong standard.`,
+ sp:`One rate for everybody sounds equal. Applied to people whose needs are unequal, an equal measure gives an unequal result: twenty per cent of a cleaner’s wage is the rent, and twenty per cent of an owner’s income is nothing he will miss.`,
+ nm:['sl',`it asks what each person can still do after the tax, not what each needs.`]},
+sl:{a:[[5,'Green','O'],[4,0,'C']],
+ p2:`A 20% tax takes from a low earner money needed for basic capacities, but from a high earner only surplus.`,
+ c:`A flat tax reduces the freedom of the worst-off more than that of the best-off.`,
+ sp:`Count what each person can still do after the tax is paid. The low earner has lost part of what she needs to live decently; the high earner has lost nothing he needed for anything.`,
+ nm:['soc',`it objects that the tax ignores need.`],
+ split:`Rawls is conditional (Property): a flat tax is just only if no alternative would do more for the least advantaged.`},
+lib:{a:[[0,'Locke','S'],[1,0,'O']],
+ p2:`A flat tax, enacted by elected representatives, charges each person in proportion to the property government protects.`,
+ c:`A flat tax is a legitimate charge.`,
+ sp:`Everyone who enjoys the protection of government should pay a proportion of their estate to maintain it, provided their representatives have agreed to the charge. The same proportion from each is exactly that.`,
+ nm:['an',`for anarchism no rate is legitimate without each person’s own agreement.`],
+ split:`Nozick opposes (Optimal form): a 20% rate funds far more than protection and courts require.`},
+an:{a:[[5,'Rothbard','O'],[4,'Rothbard','O'],[0,0,'O']],
+ p2:`Any income tax, at any rate, takes earnings under threat of force.`,
+ c:`A flat tax is aggression, however low or uniform the rate.`,
+ sp:`Twenty per cent, ten per cent, one rate or seven: the question is whether you agreed to pay. You didn’t, so the neat rate is beside the point.`,
+ nm:['lib',`it accepts taxation for a limited state.`]}
+},
+{ // 4 free university
+soc:{a:[[0,'Owen','S'],[5,0,'S']],
+ p2:`Education is the most powerful of those circumstances, and fees keep it from the people whose circumstances are worst.`,
+ c:`Free university is a proper use of government.`,
+ sp:`Whatever a person becomes, their schooling helped make them so. To sell that schooling only to those who can pay is to decide in advance who will be capable and who will not.`,
+ nm:['sl',`it argues from freedom as capacity, not from the formation of character.`]},
+sl:{a:[[5,'Green','S'],[4,0,'C']],
+ p2:`University develops that capacity, and fees put it out of reach of those who cannot pay.`,
+ c:`Free university extends freedom.`,
+ sp:`A young person shut out of study by its price has not been interfered with by anyone, and is still not free. Freedom is being able to make something of yourself, and that takes more than being left alone.`,
+ nm:['soc',`it argues that circumstances form character.`],
+ split:`Rawls is conditional (Property): free degrees for all are just only if they do more for the least advantaged than spending the money elsewhere.`},
+lib:{a:[[3,0,'O'],[1,0,'O'],[4,'Nozick','O']],
+ p2:`Funding free university from general taxation makes some people pay for others’ education on the ground that society benefits.`,
+ c:`Free university sacrifices some individuals for others.`,
+ sp:`We are told that society gains from graduates. There is no such creature to do the gaining: there is a plumber who is taxed and a law student who is taught, and the one is being used for the other.`,
+ nm:['an',`it rejects state schooling because the state runs it.`]},
+an:{a:[[0,0,'O'],[5,'Rothbard','O'],[4,'Rothbard','O']],
+ p2:`A state-funded university system makes education depend on the state’s taxes and the state’s control of what is taught.`,
+ c:`State-funded free university is not legitimate.`,
+ sp:`Free education for everyone, yes, and equal. But a school paid for and governed by the state teaches obedience to its paymaster; let the communes and the workers’ associations run their own.`,
+ nm:['soc',`it trusts government to provide education.`]}
+},
+{ // 5 UBI
+soc:{a:[[3,0,'C'],[4,0,'C']],
+ p2:`A basic income gives individuals money but leaves the ownership of production, and so the conditions of wage labour, unchanged.`,
+ c:`A basic income is at most a first step; it cannot secure flourishing by itself.`,
+ sp:`Five hundred dollars a week will ease a worker’s life, and I do not sneer at that. But she will still own nothing but her labour and still sell it to those who own everything else; the payment changes her week, not her position.`,
+ nm:['sl',`it treats a secure floor within the existing economy as enough.`]},
+sl:{a:[[4,0,'S'],[4,0,'C']],
+ p2:`A guaranteed income, funded from higher incomes, raises the position of the least advantaged.`,
+ c:`A basic income makes the distribution more just.`,
+ sp:`I do not ask that everyone end up with the same. I ask that whatever gaps remain can be justified to the person at the bottom, and a guaranteed floor under that person is a good start on the justification.`,
+ nm:['soc',`it wants ownership changed, not a floor added.`],
+ split:`Conditional is also accepted: Rawls doubted that people who choose not to work should be supported.`},
+lib:{a:[[4,'Nozick','O'],[3,0,'O'],[1,0,'O']],
+ p2:`A basic income fixes a minimum everyone must receive and takes from just holdings to achieve it.`,
+ c:`A basic income is unjust.`,
+ sp:`A guaranteed income decides in advance what everyone must end up with, then takes from whoever has more to make the picture come out right. Holdings that came about fairly are not raw material for somebody’s preferred pattern.`,
+ nm:['an',`it objects to the taxing, not to the pattern.`]},
+an:{a:[[3,'Rothbard','O'],[5,'Rothbard','O'],[4,'Rothbard','O']],
+ p2:`A basic income is funded by taxing individuals in the name of what society owes its members.`,
+ c:`A basic income has no legitimate basis.`,
+ sp:`They say society owes everyone a living. Society is not a person with a purse; the money comes out of particular pockets, under threat, and goes into others.`,
+ nm:['lib',`it objects to the redistribution but accepts a state.`]}
+},
+{ // 6 Medicare
+soc:{a:[[5,0,'O'],[4,0,'O']],
+ p2:`Private insurance supplies care according to the premiums people can pay, where Medicare supplies it according to need.`,
+ c:`Replacing Medicare distributes care by the wrong standard.`,
+ sp:`Illness does not check a bank balance before it arrives. Hand health to the insurers and care will follow premiums, when it ought to follow sickness.`,
+ nm:['sl',`it treats ill health as a barrier the state should remove.`]},
+sl:{a:[[2,0,'O'],[5,'Green','O']],
+ p2:`Untreated illness is an obstacle to self-realisation; Medicare removes it regardless of income, and premiums restore it for those who struggle to pay.`,
+ c:`Replacing Medicare abandons a proper function of the state.`,
+ sp:`Sickness you cannot afford to treat is as real a barrier to a decent life as any law against you. Removing barriers of that kind is what a state is for, and this proposal puts one back.`,
+ nm:['soc',`it argues from distribution by need.`]},
+lib:{a:[[5,0,'S'],[1,0,'S'],[2,0,'C']],
+ p2:`Ending a tax-funded state scheme reduces government interference in how individuals pay for and choose their own care.`,
+ c:`The policy increases liberty.`,
+ sp:`Under the state scheme my money is taken and my care is arranged for me. Let me deal with an insurer of my own choosing and I am interfered with less; that is a gain in liberty.`,
+ nm:['an',`it rejects both the minister and the insurer.`],
+ split:`From the Limits column the verdict is conditional: compelling a person to buy insurance overrides their liberty to bear their own risks.`},
+an:{a:[[1,'Bakunin','O'],[1,'Rothbard','C'],[0,0,'O']],
+ p2:`The policy moves health care from the state to insurance corporations and compels people to pay them; neither is controlled by those who give or need care.`,
+ c:`The policy does not organise care as it should be organised.`,
+ sp:`You offer me a choice of masters: the minister or the insurance company. Let the nurses, the doctors and the communities they serve organise care among themselves and answer to each other.`,
+ nm:['soc',`it would keep the state scheme.`],
+ split:`Rothbard is conditional (Optimal form): market provision is right, but compulsory purchase is force.`}
+},
+{ // 7 grid
+soc:{a:[[4,0,'S']],
+ p2:`The grid is productive property that everyone depends on, and nationalising it takes it out of private hands.`,
+ c:`The grid should be nationalised.`,
+ sp:`Everyone needs power and a few shareholders own the wires, so everyone pays tribute to the few. Take the wires into common hands and the tribute ends.`,
+ nm:['an',`it wants the grid held by its workers and users, not by the state.`]},
+sl:{a:[[4,0,'C']],
+ p2:`Public ownership of the grid is justified only if it leaves the least advantaged better off than a regulated private grid would.`,
+ c:`Nationalisation is just only if it does more for the least advantaged than the alternative.`,
+ sp:`Who owns the grid is not a matter of principle for me. Show me that public ownership leaves the poorest households better off than a well-regulated private grid, and I am for it; show me the reverse and I am against.`,
+ nm:['soc',`for socialism common ownership is itself the goal.`]},
+lib:{a:[[4,'Nozick','O'],[1,0,'O']],
+ p2:`The grid’s owners acquired it by voluntary exchange, and nationalisation takes it from them without their consent.`,
+ c:`Nationalisation takes a just holding and is therefore unjust.`,
+ sp:`The owners bought the grid from people entitled to sell it. A forced sale to the government, at whatever price, is still a taking; that the public would like to have it gives the public no title to it.`,
+ nm:['an',`it opposes the state acquiring anything at all.`]},
+an:{a:[[4,'Bakunin','O'],[4,'Rothbard','O'],[0,0,'O']],
+ p2:`Nationalisation moves the grid from private owners to the state, not to the workers who run it and the communities that use it.`,
+ c:`Nationalisation does not achieve collective ownership.`,
+ sp:`You have taken the grid from the capitalist, given it to the minister, and called the workers free. Property of the state is not property of the people; the official is merely the new owner.`,
+ nm:['soc',`it accepts state ownership.`]}
+},
+{ // 8 social media
+soc:{a:[[0,'Owen','S']],
+ p2:`Social media is a powerful circumstance in forming children’s characters, and it is designed for profit, not for their good.`,
+ c:`Government acts properly in removing it.`,
+ sp:`A child’s character is being shaped every hour by machines built to sell her attention. If government may arrange a child’s surroundings for her good at all, it may certainly remove this one.`,
+ nm:['sl',`it says the law lifts a barrier and cannot form anyone’s character.`]},
+sl:{a:[[2,0,'S']],
+ p2:`Compulsive social media use obstructs children’s development, and children cannot remove that obstacle themselves.`,
+ c:`The ban is a legitimate use of state power.`,
+ sp:`Nobody is made wise by being banned from something. But a fourteen-year-old cannot be expected to out-argue a product engineered to hold her, and the law can take that weight off her until she can.`,
+ nm:['soc',`it holds that government should shape the circumstances that form character.`]},
+lib:{a:[[2,0,'O'],[1,0,'O']],
+ p2:`The ban overrides the right of parents to govern their own children’s upbringing.`,
+ c:`The ban exceeds the limits of governmental power.`,
+ sp:`Children are under the care of their parents until they can reason for themselves; that authority was never the legislature’s. A government that decides what my daughter may read has taken a power nobody gave it.`,
+ nm:['an',`it distrusts any power the state gives itself.`]},
+an:{a:[[2,0,'O'],[0,0,'O']],
+ p2:`Enforcing the ban means checking users’ ages, and only the state decides how far that checking goes.`,
+ c:`The ban expands state power with no reliable limit.`,
+ sp:`To keep children off these sites, the age of every adult who logs in must be checked. Today the state promises to stop there; and who rules on whether it has stopped? The state.`,
+ nm:['lib',`it objects on behalf of parents’ rights, not to state power as such.`]}
+},
+{ // 9 compulsory voting
+soc:{a:[[0,'Marx','S']],
+ p2:`Where voting is voluntary the poorest vote least, so the state answers still more to the dominant class; compulsory voting brings the whole working class to the ballot.`,
+ c:`Compulsory voting weakens the dominant class’s hold on the state.`,
+ sp:`Leave voting to those with the time and confidence for it and you will get a parliament of the comfortable. Bring every worker to the ballot box and the majority at least has the numbers on its side.`,
+ nm:['sl',`it wants equal political liberty for all citizens, not power for one class.`]},
+sl:{a:[[1,0,'S']],
+ p2:`Compulsory voting keeps the equal liberty to vote equal in practice, because rich and poor turn out at the same rate.`,
+ c:`Compulsory voting helps secure equal political liberty.`,
+ sp:`An equal right to vote means little if one class reliably uses it and another does not. A rule that brings everyone to the booth keeps the equal liberty equal in practice.`,
+ nm:['soc',`it sees the vote as a weapon for the working class.`]},
+lib:{a:[[0,'Locke','O'],[2,0,'O'],[5,0,'O'],[1,0,'O']],
+ p2:`Consent that is compelled under threat of a fine is not consent.`,
+ c:`Compulsory voting undermines the consent that makes government legitimate.`,
+ sp:`A government draws its authority from the agreement of the governed. Agreement extracted with a fine is no agreement; a person may consent by voting, and may withhold consent by staying home.`,
+ nm:['an',`it denies that voting could make a government legitimate at all.`]},
+an:{a:[[0,0,'O'],[5,'Rothbard','O']],
+ p2:`Compulsory voting forces each person to take part in choosing rulers, so their participation is neither freely given nor able to be withheld.`,
+ c:`Compulsory voting is not legitimate.`,
+ sp:`First they tell me the state rules by my choice, then they fine me if I decline to choose. I am not free because I am permitted to pick my master, and still less when I am ordered to.`,
+ nm:['lib',`it accepts government that rests on real consent.`]}
+},
+{ // 10 vaccination
+soc:{a:[[3,0,'S']],
+ p2:`Protection from infectious disease is a social condition that can be secured only collectively, by nearly everyone being vaccinated.`,
+ c:`The rule secures a condition of each child’s flourishing.`,
+ sp:`No child is kept safe from measles by her own family’s efforts alone; she is kept safe by what everyone around her has done. Health of this kind is made together or not at all.`,
+ nm:['sl',`it says the rule removes a danger and stops there.`]},
+sl:{a:[[2,0,'S'],[3,'Green','S']],
+ p2:`Infectious disease is an obstacle to children’s development, and the rule removes it from the places where they spend their days.`,
+ c:`The rule is a legitimate use of state power.`,
+ sp:`The rule does not make any parent virtuous. It removes a danger from the rooms where small children spend their days, and the child who is protected gains as much as the children around her.`,
+ nm:['soc',`it treats health as something made collectively.`]},
+lib:{a:[[3,0,'O'],[2,0,'O'],[5,0,'O']],
+ p2:`The rule denies a family childcare in order to lower the risk to everyone else.`,
+ c:`The rule sacrifices some individuals for others.`,
+ sp:`A centre’s owner may turn away whomever she likes. What the government may not do is bar a family from every centre in the country so that the figures for everyone else improve.`,
+ nm:['an',`it objects to advice being turned into command.`]},
+an:{a:[[0,0,'O'],[3,'Rothbard','O']],
+ p2:`The rule turns medical advice, which people could accept freely, into a condition enforced by the state.`,
+ c:`The rule is not a legitimate exercise of authority.`,
+ sp:`On questions of medicine I listen to the doctor, and I would have every parent do the same. But I listen because I am persuaded; once the state makes the doctor’s advice a condition of entry, science has become a police matter.`,
+ nm:['lib',`it objects on behalf of individual rights.`]}
+},
+{ // 11 police search
+soc:{a:[[2,'Owen','O'],[0,'Marx','O']],
+ p2:`Search powers respond to crime after character has been formed, and do nothing to change the circumstances that produce it.`,
+ c:`The search power is the wrong means of preventing crime.`,
+ sp:`You search a young man’s pockets for a knife and never ask what made him think he needed one. Change the conditions that produced him and the knife disappears; search him and you have one more youth who has learned to hate a uniform.`,
+ nm:['sl',`it objects on behalf of the innocent person searched.`]},
+sl:{a:[[3,'Rawls','O'],[2,0,'S']],
+ p2:`Warrantless search subjects innocent individuals to intrusion in order to raise overall safety.`,
+ c:`The search power is unjust.`,
+ sp:`The area may well be safer overall. But each person stopped and searched without cause is paying for that safety with her own liberty, and a gain to the total does not make her loss acceptable.`,
+ nm:['lib',`it appeals to rights held before any government exists.`],
+ split:`Green supports (Limits): fear of violence is an obstacle to self-realisation, and the power removes it.`},
+lib:{a:[[2,0,'O'],[5,0,'O'],[0,'Locke','O']],
+ p2:`Searching a person with no evidence of wrongdoing invades the liberty and possessions that government exists to protect.`,
+ c:`The search power exceeds the limits of governmental power.`,
+ sp:`My person and my pockets were mine before any government existed, and I gave magistrates power in order to protect them. An officer who may go through them on no suspicion at all holds exactly the arbitrary power I set up government to escape.`,
+ nm:['an',`it denies that any rule can keep state power within bounds.`]},
+an:{a:[[2,0,'O'],[0,0,'O'],[5,'Rothbard','O']],
+ p2:`Under the policy the state designates the areas, its officers choose whom to search, and its courts hear any complaint.`,
+ c:`The search power has no reliable limit.`,
+ sp:`Who designates the area? The state. Who decides whom to search inside it? The state’s officer. Who hears your complaint afterwards? The state’s court. That is what they call a safeguard.`,
+ nm:['lib',`it believes rights and warrants can limit a government.`]}
+},
+{ // 12 assemblies
+soc:{a:[[1,'Owen','S']],
+ p2:`A residents’ assembly lets a community govern itself directly instead of through elected office-holders.`,
+ c:`Residents’ assemblies should replace councils.`,
+ sp:`A community of a few thousand can manage its own affairs, and its members learn to co-operate by doing so. Give the residents the decisions and you give them the habit of acting for each other.`,
+ nm:['an',`it wants no authority standing above the assembly.`]},
+sl:{a:[[1,0,'C'],[0,'Green','S']],
+ p2:`Binding decisions by whoever attends an assembly secure equal liberties only if the assembly sits under constitutional limits it cannot override.`,
+ c:`Assemblies are acceptable only under such limits.`,
+ sp:`I welcome citizens deciding together. But a meeting of whoever turns up can vote away the liberties of whoever did not, so the assembly must sit under a constitution it cannot override.`,
+ nm:['lib',`it objects to how much the assembly may decide.`],
+ split:`Green supports (Need and source): residents deliberating together is shared recognition of a common good in practice.`},
+lib:{a:[[1,0,'O'],[2,0,'O'],[2,0,'C']],
+ p2:`An assembly with binding power over rates, land use and services does far more than protect against force, theft and fraud.`,
+ c:`The assembly, like the council, exceeds what is justified.`,
+ sp:`It makes no difference to me whether my neighbours vote on my property directly or elect councillors to do it. What matters is how much they may decide, and an assembly that can bind me on anything it likes may decide far too much.`,
+ nm:['sl',`it accepts wide local powers so long as a constitution protects equal liberties.`]},
+an:{a:[[1,'Bakunin','S'],[1,'Rothbard','O']],
+ p2:`Residents’ assemblies put decisions in the hands of the people they affect, at the lowest level.`,
+ c:`Residents’ assemblies should replace councils.`,
+ sp:`At last, a decision made by the people who must live with it, in the place where they live. Let these assemblies federate freely with one another, and there is nothing left for the capital to do.`,
+ nm:['soc',`it values the assembly for teaching co-operation and accepts a government above it.`],
+ split:`Rothbard opposes (Optimal form): an assembly that binds every resident is still a monopoly ruling by majority.`}
+}
+];
+
+/* ============================ HELPERS ============================ */
+const $ = (t, a, ...k) => {
+  const e = document.createElement(t);
+  for (const [n, v] of Object.entries(a || {})) {
+    if (v == null || v === false) continue;
+    if (n === 'class') e.className = v;
+    else if (n === 'style') e.style.cssText = v;
+    else if (n.startsWith('on')) e.addEventListener(n.slice(2), v);
+    else if (n === 'value') e.value = v;
+    else e.setAttribute(n, v === true ? '' : v);
+  }
+  for (const c of k.flat(3)) { if (c == null || c === false) continue; e.append(c.nodeType ? c : document.createTextNode(String(c))); }
+  return e;
+};
+const app = document.getElementById('app');
+const mount = (el, wide) => { app.className = wide ? 'wide' : ''; app.replaceChildren(el); window.scrollTo(0, 0); };
+const cell = (ph, col) => POSTER[ph][col];
+const whoOf = (ph, col, who) => cell(ph, col).length === 1 ? cell(ph, col)[0][0] : who;
+const thesis = (ph, col, who) => { const c = cell(ph, col); const f = c.find(x => x[0] === who) || (c.length === 1 ? c[0] : null); return f ? f[1] : ''; };
+const entryOf = r => ENTRIES[r.p][r.ph];
+const accepted = r => entryOf(r).a.map(x => ({col: x[0], who: whoOf(r.ph, x[0], x[1]), v: x[2]}));
+const modelOf = r => accepted(r)[0];
+function mark(r, ans) {
+  const acc = accepted(r), who = whoOf(r.ph, ans.col, ans.who);
+  const p1 = acc.some(x => x.col === ans.col && x.who === who);
+  const v = p1 ? acc.some(x => x.col === ans.col && x.who === who && x.v === ans.v) : acc.some(x => x.v === ans.v);
+  return {p1, v};
+}
+function rng(seed) { let h = 1779033703 ^ seed.length; for (let i = 0; i < seed.length; i++) { h = Math.imul(h ^ seed.charCodeAt(i), 3432918353); h = h << 13 | h >>> 19; }
+  return () => { h = Math.imul(h ^ (h >>> 16), 2246822507); h = Math.imul(h ^ (h >>> 13), 3266489909); h ^= h >>> 16; return (h >>> 0) / 4294967296; }; }
+function makeDeck(seed) {
+  const d = []; ENTRIES.forEach((_, p) => PK.forEach(ph => d.push({p, ph})));
+  const r = seed ? rng(seed.toUpperCase()) : Math.random;
+  for (let i = d.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [d[i], d[j]] = [d[j], d[i]]; }
+  return d;
+}
+const philStyle = ph => `--pc:${PHIL[ph].color};--pt:${PHIL[ph].tint}`;
+const store = { get(k) { try { return sessionStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { sessionStorage.setItem(k, v); } catch (e) {} } };
+
+/* ============================ SHARED VIEWS ============================ */
+function policyCard(r, showPhil, big) {
+  return $('div', {class: 'policy' + (big ? ' big' : ''), style: showPhil ? philStyle(r.ph) : ''},
+    $('div', {class: 'label'}, 'Policy'),
+    $('div', {class: 'title'}, POLICIES[r.p]),
+    showPhil && $('div', {class: 'row'}, $('span', {class: 'mute'}, 'Argue as'), $('span', {class: 'chip'}, PHIL[r.ph].name), $('span', {class: 'mute small'}, PHIL[r.ph].thinkers)));
+}
+function argLines(p1, p2, c) {
+  return $('div', {class: 'arg'}, $('b', {}, 'P1'), $('div', {}, p1), $('b', {}, 'P2'), $('div', {}, p2 || '—'), $('b', {}, 'C'), $('div', {}, c || '—'));
+}
+function modelBox(r) {
+  const e = entryOf(r), m = modelOf(r);
+  return $('div', {class: 'model', style: philStyle(r.ph)},
+    $('div', {class: 'label'}, 'Model answer'),
+    $('div', {}, $('span', {class: 'tag'}, COLS[m.col] + ' · ' + m.who), $('span', {class: 'tag'}, VERD[m.v])),
+    argLines(thesis(r.ph, m.col, m.who), e.p2, e.c),
+    e.split && $('p', {class: 'small mute', style: 'margin:8px 0 0'}, e.split));
+}
+// The Draw answer form. ans is mutated in place; onDone called on submit.
+function drawForm(r, ans, locked, onDone, rerender) {
+  const box = $('div', {style: philStyle(r.ph)});
+  const c = ans.col != null ? cell(r.ph, ans.col) : null;
+  const ready = () => ans.col != null && (c.length === 1 || ans.who) && ans.v && (ans.p2 || '').trim() && (ans.c || '').trim();
+  const sub = $('button', {class: 'btn primary', disabled: !ready(), onclick: () => onDone()}, 'Submit');
+  const upd = () => { sub.disabled = !ready(); };
+  box.append(
+    $('div', {class: 'step'}, $('div', {class: 'label'}, '1 · Which issue does this policy raise?'),
+      $('div', {class: 'cols'}, COLS.map((n, i) => $('button', {class: 'choice' + (ans.col === i ? ' sel' : ''), disabled: locked,
+        onclick: () => { ans.col = i; ans.who = null; rerender(); }}, $('span', {class: 'n'}, i + 1), n)))));
+  if (c) {
+    if (c.length === 1) box.append($('div', {class: 'thesis'}, $('div', {class: 'who'}, 'P1 · ' + c[0][0]), c[0][1]));
+    else box.append($('p', {class: 'small mute', style: 'margin:10px 0 0'}, 'The thinkers split here. Choose your P1.'),
+      $('div', {class: 'pick2'}, c.map(([w, t]) => $('button', {class: 'choice' + (ans.who === w ? ' sel' : ''), disabled: locked,
+        onclick: () => { ans.who = w; rerender(); }}, $('div', {class: 'thesis', style: 'margin:0;background:none;padding:0 0 0 10px'}, $('div', {class: 'who'}, 'P1 · ' + w), t)))));
+  }
+  box.append(
+    $('div', {class: 'step'}, $('div', {class: 'label'}, '2 · Verdict'),
+      $('div', {class: 'verd'}, Object.entries(VERD).map(([k, n]) => $('button', {class: 'choice' + (ans.v === k ? ' sel' : ''), disabled: locked,
+        onclick: () => { ans.v = k; rerender(); }}, n)))),
+    $('div', {class: 'step'}, $('div', {class: 'label'}, '3 · P2: your bridging premise (connect P1 to this policy)'),
+      $('textarea', {maxlength: 300, disabled: locked, value: ans.p2 || '', oninput: e => { ans.p2 = e.target.value; upd(); }})),
+    $('div', {class: 'step'}, $('div', {class: 'label'}, '4 · C: your conclusion'),
+      $('textarea', {maxlength: 300, disabled: locked, style: 'min-height:52px', value: ans.c || '', oninput: e => { ans.c = e.target.value; upd(); }})));
+  if (!locked) box.append($('div', {class: 'step'}, sub));
+  return box;
+}
+function drawResult(r, ans) {
+  const m = mark(r, ans), who = whoOf(r.ph, ans.col, ans.who);
+  return $('div', {},
+    $('div', {class: 'card', style: philStyle(r.ph)},
+      $('div', {class: 'label'}, 'Your argument'),
+      $('div', {}, $('span', {class: 'tag ' + (m.p1 ? 'ok' : 'bad')}, (m.p1 ? '✓ ' : '✗ ') + COLS[ans.col] + ' · ' + who),
+        $('span', {class: 'tag ' + (m.v ? 'ok' : 'bad')}, (m.v ? '✓ ' : '✗ ') + VERD[ans.v])),
+      argLines(thesis(r.ph, ans.col, who), ans.p2, ans.c),
+      $('p', {class: 'small mute', style: 'margin:8px 0 0'}, 'Compare your P2 and C with the model: does your P2 connect P1 to this policy, and does C follow?')),
+    modelBox(r));
+}
+function whoForm(r, ans, locked, onPick) {
+  return $('div', {},
+    $('div', {class: 'quote'}, '“' + entryOf(r).sp + '”'),
+    $('div', {class: 'label step'}, 'Which political philosophy is talking?'),
+    $('div', {class: 'phils'}, PK.map(k => $('button', {class: 'choice' + (ans.pick === k ? ' sel' : ''), style: philStyle(k), disabled: locked,
+      onclick: () => onPick(k)}, PHIL[k].name))));
+}
+function whoResult(r, ans) {
+  const e = entryOf(r), ok = ans.pick === r.ph, m = modelOf(r);
+  return $('div', {class: 'model', style: philStyle(r.ph)},
+    ans.pick && $('div', {}, $('span', {class: 'tag ' + (ok ? 'ok' : 'bad')}, (ok ? '✓ ' : '✗ ') + PHIL[ans.pick].name)),
+    $('p', {}, $('b', {}, PHIL[r.ph].name + ' (' + m.who + '). '), 'The speaker reasons from: “' + thesis(r.ph, m.col, m.who) + '”'),
+    $('p', {style: 'margin:0'}, $('b', {}, 'Not ' + PHIL[e.nm[0]].name + ': '), e.nm[1]));
+}
+
+/* ============================ HOME ============================ */
+function home(msg) {
+  const code = $('input', {type: 'text', placeholder: 'Room code', maxlength: 4, style: 'text-transform:uppercase;max-width:150px', value: new URLSearchParams(location.search).get('room') || ''});
+  const seed = $('input', {type: 'text', placeholder: 'Optional class code', maxlength: 12, style: 'max-width:200px'});
+  mount($('div', {},
+    $('h1', {}, 'The Draw'),
+    $('p', {class: 'mute'}, 'Apply the four political philosophies to a policy, using the theses on your Six Issues poster.'),
+    msg && $('p', {class: 'err'}, msg),
+    $('div', {class: 'home'},
+      $('div', {class: 'card'}, $('h2', {}, 'Solo'),
+        $('p', {class: 'small mute'}, 'Work through draws in your own time. Enter a class code and everyone using that code gets the same draws in the same order.'),
+        seed,
+        $('div', {class: 'row', style: 'margin-top:10px'},
+          $('button', {class: 'btn primary', onclick: () => solo('draw', seed.value.trim())}, 'The Draw'),
+          $('button', {class: 'btn', onclick: () => solo('who', seed.value.trim())}, 'Who’s talking?'))),
+      $('div', {class: 'card'}, $('h2', {}, 'Class'),
+        $('p', {class: 'small mute'}, 'Join your teacher’s room with the code on the board. Your answers appear on the class screen without your name.'),
+        $('div', {class: 'row'}, code, $('button', {class: 'btn primary', onclick: () => join(code.value.trim().toUpperCase())}, 'Join')),
+        $('div', {style: 'margin-top:14px'}, $('button', {class: 'btn link', onclick: host}, 'I’m the teacher: host a room')))),
+    !FIREBASE_CONFIG && $('p', {class: 'note'}, 'Class mode is in demo mode: the host and students must be tabs in the same browser on this device. Add the Firebase config to connect separate devices.')));
+}
+
+/* ============================ SOLO ============================ */
+function solo(mode, seed) {
+  const s = {deck: makeDeck(seed), i: 0, ans: {}, done: false, pts: 0, max: 0, streak: 0};
+  const render = () => {
+    if (s.i >= s.deck.length) return mount($('div', {}, $('h1', {}, 'Deck finished'), $('p', {class: 'score'}, `Score ${s.pts}/${s.max}`), $('button', {class: 'btn primary', onclick: () => home()}, 'Home')));
+    const r = s.deck[s.i];
+    const head = $('div', {class: 'row'}, $('button', {class: 'btn link', onclick: () => home()}, '← Home'), $('span', {class: 'grow'}),
+      $('span', {class: 'small mute'}, `${mode === 'draw' ? 'The Draw' : 'Who’s talking?'} · ${s.i + 1} of ${s.deck.length}${seed ? ' · code ' + seed.toUpperCase() : ''}`),
+      $('span', {class: 'score'}, `${s.pts}/${s.max}`), $('span', {class: 'small mute'}, `streak ${s.streak}`));
+    const next = $('button', {class: 'btn primary', onclick: () => { s.i++; s.ans = {}; s.done = false; render(); }}, 'Next draw');
+    let body;
+    if (mode === 'draw') {
+      const sy = window.scrollY;
+      body = [policyCard(r, true), s.done ? [drawResult(r, s.ans), next] : drawForm(r, s.ans, false, () => {
+        const m = mark(r, s.ans); s.max += 2; s.pts += (m.p1 ? 1 : 0) + (m.v ? 1 : 0); s.streak = m.p1 && m.v ? s.streak + 1 : 0; s.done = true; render();
+      }, () => { render(); window.scrollTo(0, sy); })];
+    } else {
+      body = [policyCard(r, false), whoForm(r, s.ans, s.done, k => { s.ans.pick = k; s.max++; if (k === r.ph) { s.pts++; s.streak++; } else s.streak = 0; s.done = true; render(); }),
+        s.done && [whoResult(r, s.ans), next]];
+    }
+    mount($('div', {}, head, body));
+  };
+  render();
+}
+
+/* ============================ BACKENDS ============================ */
+let backendP = null;
+const within = (p, ms) => Promise.race([p, new Promise((_, no) => setTimeout(() => no(new Error('timeout')), ms))]);
+const backend = () => backendP || (backendP = FIREBASE_CONFIG ? firebaseBackend() : Promise.resolve(localBackend()));
+async function firebaseBackend() {
+  const base = `https://www.gstatic.com/firebasejs/${FIREBASE_VERSION}/`;
+  const {initializeApp} = await import(base + 'firebase-app.js');
+  const fs = await import(base + 'firebase-firestore.js');
+  const db = fs.getFirestore(initializeApp(FIREBASE_CONFIG));
+  const room = c => fs.doc(db, 'rooms', c), ents = c => fs.collection(db, 'rooms', c, 'entries');
+  const clear = async c => { const s = await fs.getDocs(ents(c)); await Promise.all(s.docs.map(d => fs.deleteDoc(d.ref))); };
+  return {
+    live: true,
+    create: (c, round) => fs.setDoc(room(c), {open: true, n: 0, round, created: Date.now()}),
+    setRound: (c, round) => fs.updateDoc(room(c), {round}),
+    clear,
+    watchRoom: (c, cb) => fs.onSnapshot(room(c), s => cb(s.exists() ? s.data() : null), () => cb(null)),
+    join: c => fs.runTransaction(db, async tx => { const s = await tx.get(room(c)); if (!s.exists() || !s.data().open) throw new Error('closed'); const n = (s.data().n || 0) + 1; tx.update(room(c), {n}); return n; }),
+    submit: (c, id, data) => fs.setDoc(fs.doc(db, 'rooms', c, 'entries', id), data),
+    watchEntries: (c, cb) => fs.onSnapshot(ents(c), s => cb(s.docs.map(d => d.data()))),
+    close: async c => { await clear(c); await fs.deleteDoc(room(c)); }
+  };
+}
+function localBackend() {
+  const mem = {}, subs = new Set(), key = c => 'the-draw-room-' + c;
+  let ch = null; try { ch = new BroadcastChannel('the-draw'); ch.onmessage = e => subs.forEach(f => f(e.data)); } catch (e) {}
+  const get = c => { try { const v = localStorage.getItem(key(c)); return v ? JSON.parse(v) : null; } catch (e) { return mem[c] || null; } };
+  const put = (c, s) => { try { s ? localStorage.setItem(key(c), JSON.stringify(s)) : localStorage.removeItem(key(c)); } catch (e) { mem[c] = s; }
+    if (ch) ch.postMessage(c); subs.forEach(f => f(c)); };
+  const watch = (c, cb) => { const f = x => { if (x === c) cb(); }; subs.add(f); cb(); return () => subs.delete(f); };
+  return {
+    live: false,
+    create: async (c, round) => put(c, {room: {open: true, n: 0, round, created: Date.now()}, entries: {}}),
+    setRound: async (c, round) => { const s = get(c); if (s) { s.room.round = round; put(c, s); } },
+    clear: async c => { const s = get(c); if (s) { s.entries = {}; put(c, s); } },
+    watchRoom: (c, cb) => watch(c, () => { const s = get(c); cb(s ? s.room : null); }),
+    join: async c => { const s = get(c); if (!s || !s.room.open) throw new Error('closed'); s.room.n++; put(c, s); return s.room.n; },
+    submit: async (c, id, data) => { const s = get(c); if (!s) throw new Error('closed'); s.entries[id] = data; put(c, s); },
+    watchEntries: (c, cb) => watch(c, () => { const s = get(c); cb(s ? Object.values(s.entries) : []); }),
+    close: async c => put(c, null)
+  };
+}
+
+/* ============================ CLASS: STUDENT ============================ */
+async function join(code) {
+  if (!/^[A-Z]{4}$/.test(code)) return home('Enter the four-letter room code.');
+  let be, num;
+  try { be = await within(backend(), 12000); num = +store.get('num-' + code) || await within(be.join(code), 12000); } catch (e) { return home('That room is not open. Check the code with your teacher.'); }
+  store.set('num-' + code, num);
+  let sid = store.get('sid-' + code); if (!sid) { sid = Math.random().toString(36).slice(2, 10); store.set('sid-' + code, sid); }
+  const s = {room: null, rid: null, ans: {}, sent: false, sig: ''};
+  let timerEl = null;
+  const tick = setInterval(() => { if (timerEl && s.room) timerEl.textContent = clock(s.room.round.endsAt); }, 500);
+  const leave = () => { clearInterval(tick); unsub(); home(); };
+  const render = () => {
+    const r = s.room && s.room.round;
+    const head = $('div', {class: 'row'}, $('button', {class: 'btn link', onclick: leave}, '← Leave'), $('span', {class: 'grow'}),
+      $('span', {class: 'small mute'}, 'Room ' + code), $('span', {class: 'score'}, 'You are #' + num), timerEl = $('span', {class: 'score'}, r ? clock(r.endsAt) : ''));
+    if (!r || r.p == null) return mount($('div', {}, head, $('div', {class: 'card'}, $('h2', {}, 'You’re in'), $('p', {class: 'mute'}, 'Waiting for your teacher to start a draw.'))));
+    const send = async () => { s.sent = true; render(); try { await be.submit(code, sid, {num, round: r.id, mode: r.mode, col: s.ans.col ?? null, who: s.ans.col != null ? whoOf(r.ph, s.ans.col, s.ans.who) : null,
+      v: s.ans.v || null, p2: (s.ans.p2 || '').slice(0, 300), c: (s.ans.c || '').slice(0, 300), pick: s.ans.pick || null, t: Date.now()}); } catch (e) { s.sent = false; s.err = 'Could not send. Try again.'; render(); } };
+    let body;
+    if (r.mode === 'draw') {
+      const sy = window.scrollY;
+      body = [policyCard(r, true), r.reveal && s.sent ? drawResult(r, s.ans) : r.reveal ? modelBox(r)
+        : drawForm(r, s.ans, s.sent, send, () => { render(); window.scrollTo(0, sy); })];
+    } else {
+      body = [policyCard(r, false), whoForm(r, s.ans, s.sent || r.reveal, k => { s.ans.pick = k; send(); }), r.reveal && whoResult(r, s.ans)];
+    }
+    mount($('div', {}, head, body, s.err && $('p', {class: 'err'}, s.err),
+      s.sent && !r.reveal && $('p', {class: 'note', style: 'margin-top:14px'}, 'Sent. Your answer is on the class screen as #' + num + '.')));
+  };
+  const unsub = be.watchRoom(code, room => {
+    if (!room) { clearInterval(tick); return home('The room has closed.'); }
+    const r = room.round, sig = r.id + '|' + r.reveal;
+    s.room = room;
+    if (r.id !== s.rid) { s.rid = r.id; s.ans = {}; s.sent = false; s.err = ''; }
+    if (sig !== s.sig) { s.sig = sig; render(); }
+  });
+}
+function clock(endsAt) { if (!endsAt) return ''; const t = Math.max(0, Math.ceil((endsAt - Date.now()) / 1000)); return Math.floor(t / 60) + ':' + String(t % 60).padStart(2, '0'); }
+
+/* ============================ CLASS: TEACHER ============================ */
+async function host() {
+  let be; try { be = await within(backend(), 12000); } catch (e) { backendP = null; return home('Could not reach the live service. Check the network, or use Solo with a class code.'); }
+  const A = 'ABCDEFGHJKLMNPQRSTUVWXYZ'; let code = ''; for (let i = 0; i < 4; i++) code += A[Math.floor(Math.random() * A.length)];
+  const deck = makeDeck(); let di = 0;
+  const s = {room: null, entries: [], mode: 'draw', timer: 0, marking: true, spot: null, pickP: '', pickPh: ''};
+  try { await within(be.create(code, {id: 0, p: null}), 12000); } catch (e) { return home('Could not open a room. Check the Firebase config and rules.'); }
+  let timerEl = null, u1 = () => {}, u2 = () => {};
+  const tick = setInterval(() => { if (timerEl && s.room && s.room.round) timerEl.textContent = clock(s.room.round.endsAt); }, 500);
+  const newRound = async () => {
+    let r = s.pickP !== '' && s.pickPh !== '' ? {p: +s.pickP, ph: s.pickPh} : s.pickP !== '' ? {p: +s.pickP, ph: PK[Math.floor(Math.random() * 4)]}
+      : s.pickPh !== '' ? {p: Math.floor(Math.random() * POLICIES.length), ph: s.pickPh} : deck[di++ % deck.length];
+    await be.clear(code);
+    await be.setRound(code, {id: Date.now(), mode: s.mode, p: r.p, ph: r.ph, reveal: false, endsAt: s.timer ? Date.now() + s.timer * 1000 : 0});
+  };
+  const close = async () => { clearInterval(tick); u1(); u2(); try { await be.close(code); } catch (e) {} home(); };
+  const entryCard = (r, e, big) => {
+    const m = s.marking ? mark(r, e) : null, cls = ok => m ? (ok ? ' ok' : ' bad') : '';
+    return $('div', {class: 'entry', style: philStyle(r.ph), onclick: big ? ev => ev.stopPropagation() : () => { s.spot = e.num; render(); }},
+      $('div', {class: 'num'}, '#' + e.num),
+      $('div', {}, $('span', {class: 'tag' + cls(m && m.p1)}, COLS[e.col] + ' · ' + e.who), $('span', {class: 'tag' + cls(m && m.v)}, VERD[e.v])),
+      $('div', {class: 'arg'}, $('b', {}, 'P1'), $('div', {class: 'p1'}, thesis(r.ph, e.col, e.who)), $('b', {}, 'P2'), $('div', {}, e.p2), $('b', {}, 'C'), $('div', {}, e.c)));
+  };
+  function render() {
+    if (!s.room) return;
+    const r = s.room.round, on = r && r.p != null;
+    const list = on ? s.entries.filter(e => e.round === r.id).sort((a, b) => a.num - b.num) : [];
+    const sel = (val, opts, set) => $('select', {onchange: e => { set(e.target.value); e.target.blur(); }}, opts.map(([v, n]) => $('option', {value: v, selected: String(val) === String(v)}, n)));
+    const bar = $('div', {class: 'hostbar'},
+      $('div', {}, $('div', {class: 'label'}, 'Room code'), $('div', {class: 'code'}, code)),
+      $('div', {class: 'grow'}, $('div', {class: 'small mute'}, be.live ? 'Students open this page, choose Class and enter the code.' : 'Demo mode: open this page in another tab of this browser to join.'),
+        $('div', {class: 'score'}, `${s.room.n} joined${on ? ' · ' + list.length + ' answered' : ''}`)),
+      timerEl = $('div', {class: 'timer'}, on ? clock(r.endsAt) : ''),
+      $('button', {class: 'btn', onclick: close}, 'Close room'));
+    const ctl = $('div', {class: 'card row'},
+      sel(s.mode, [['draw', 'The Draw'], ['who', 'Who’s talking?']], v => s.mode = v),
+      sel(s.pickP, [['', 'Random policy'], ...POLICIES.map((t, i) => [i, (i + 1) + ' · ' + t])], v => s.pickP = v),
+      sel(s.pickPh, [['', 'Random philosophy'], ...PK.map(k => [k, PHIL[k].name])], v => s.pickPh = v),
+      sel(s.timer, [[0, 'No timer'], [120, '2 minutes'], [180, '3 minutes'], [300, '5 minutes']], v => s.timer = +v),
+      $('button', {class: 'btn primary', onclick: newRound}, on ? 'Next draw' : 'Start'),
+      on && !r.reveal && $('button', {class: 'btn', onclick: () => be.setRound(code, {...r, reveal: true, endsAt: 0})}, 'Reveal model'),
+      on && r.mode === 'draw' && $('label', {class: 'small row', style: 'gap:6px'}, $('input', {type: 'checkbox', checked: s.marking, onchange: e => { s.marking = e.target.checked; render(); }}), 'Show marking'));
+    let body = null;
+    if (on && r.mode === 'draw') {
+      body = [policyCard(r, true, true), r.reveal && modelBox(r), $('div', {class: 'grid'}, list.map(e => entryCard(r, e)))];
+    } else if (on) {
+      const counts = Object.fromEntries(PK.map(k => [k, list.filter(e => e.pick === k).length])), mx = Math.max(1, ...Object.values(counts));
+      body = [policyCard(r, false, true), $('div', {class: 'quote', style: 'font-size:28px'}, '“' + entryOf(r).sp + '”'),
+        $('div', {class: 'bars'}, PK.map(k => $('div', {class: 'bar' + (r.reveal && k === r.ph ? ' ok' : '')}, $('span', {}, PHIL[k].name), $('i', {style: `width:${counts[k] / mx * 100}%`}), $('span', {}, counts[k])))),
+        r.reveal && whoResult(r, {})];
+    }
+    const spot = s.spot != null && on && list.find(e => e.num === s.spot);
+    const lists = [...document.querySelectorAll('select')].map(x => x === document.activeElement);
+    if (lists.some(Boolean)) return; // do not rebuild while a menu is open
+    mount($('div', {}, bar, ctl, body, spot && $('div', {class: 'overlay', onclick: () => { s.spot = null; render(); }}, entryCard(r, spot, true))), true);
+  }
+  u1 = be.watchRoom(code, room => { s.room = room; render(); });
+  u2 = be.watchEntries(code, list => { s.entries = list; render(); });
+}
+
+home();
+</script>
+</body>
+</html>
