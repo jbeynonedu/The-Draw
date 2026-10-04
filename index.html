@@ -95,6 +95,32 @@ details.rev[open] summary{margin-bottom:6px}
 .ailine{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;align-items:start;margin:8px 0}
 .ailine .tag{margin:0;white-space:nowrap}
 @media(max-width:560px){.ailine{grid-template-columns:1fr}}
+/* ---- pastel theme ---- */
+:root{--ink:#2b2a33;--mute:#6a6877;--line:#e7dfd6;--bg:#fbf6ef;--ok:#1f7a55;--okbg:#dcf3e6;--bad:#b0413e;--badbg:#fbe3e0;--pc:#5767b3;--pt:#e8ebf8}
+.card{border-radius:14px}
+.btn{border-color:#d5cdc2;border-radius:10px}
+.btn:hover{background:#f6f0e8}
+.btn.primary{background:#5767b3;border-color:#5767b3}
+.btn.primary:hover{background:#47569c}
+.policy{background:var(--pt);border:0;border-left:6px solid var(--pc);border-radius:14px}
+.chip{background:#fff;color:var(--pc);border:1.5px solid var(--pc)}
+.choice{border-color:#d5cdc2;border-radius:10px}
+.model{border-radius:14px}
+.quote{background:#fff;border-left:5px solid #c9b8e8;border-radius:0 12px 12px 0;padding:14px 16px}
+textarea,input[type=text]{border-color:#d5cdc2;border-radius:10px}
+.hostbar{border-radius:14px}
+.home .c-draw{background:#fdebd8;border-color:#f3d3ae}
+.home .c-who{background:#dff1ec;border-color:#bfe0d7}
+.home .c-class{background:#e9e6f7;border-color:#cfc9ee}
+.home .c-kc{background:#fbe4ea;border-color:#f1c6d1}
+.av{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--pt);color:var(--pc);border:1.5px solid var(--pc);font-weight:800;font-size:13px;letter-spacing:0;text-transform:none;vertical-align:middle;margin-right:8px;flex:none}
+.av.lg{width:44px;height:44px;font-size:17px}
+.kc{font-size:13.5px;color:var(--mute);margin-top:4px}
+.thesis .who{display:flex;align-items:center;margin-bottom:4px}
+details.kcbox{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin:12px 0}
+details.kcbox summary{cursor:pointer;font-weight:700;color:var(--pc)}
+.concept{margin:8px 0 0}
+.thinker{display:flex;align-items:center;font-weight:800;font-size:17px;margin:14px 0 2px}
 </style>
 </head>
 <body>
@@ -133,10 +159,10 @@ const RECAPTCHA_SITE_KEY = "6LdaAtwtAAAAAPcFM_YvOXfGW5NtUhPWU0cyQG-D";
 const COLS = ['Need and source','Optimal form','Limits','Individual vs collective','Property','Principles'];
 const VERD = {S:'Support',O:'Oppose',C:'Conditional'};
 const PHIL = {
-  soc:{name:'Socialism',thinkers:'Marx · Owen',color:'#B03A2E',tint:'#FBEFED'},
-  sl:{name:'Social liberalism',thinkers:'Green · Rawls',color:'#1F7A7A',tint:'#E8F4F4'},
-  lib:{name:'Libertarianism',thinkers:'Locke · Nozick',color:'#9A5F0A',tint:'#FCF3E3'},
-  an:{name:'Anarchism',thinkers:'Bakunin · Rothbard',color:'#3A3F44',tint:'#EFF0F1'}
+  soc:{name:'Socialism',thinkers:'Marx · Owen',color:'#A8443A',tint:'#FBE4E0'},
+  sl:{name:'Social liberalism',thinkers:'Green · Rawls',color:'#1F6F69',tint:'#D9F0EC'},
+  lib:{name:'Libertarianism',thinkers:'Locke · Nozick',color:'#8A5A0A',tint:'#FCEBCB'},
+  an:{name:'Anarchism',thinkers:'Bakunin · Rothbard',color:'#4A4E7D',tint:'#E4E4F4'}
 };
 const PK = ['soc','sl','lib','an'];
 // POSTER[phil][column] = one or two [thinker, thesis] pairs, exactly as on the poster
@@ -170,6 +196,70 @@ an:[
  [['Bakunin',`Land and the instruments of labour should be held collectively; each worker receives the product of their labour.`],['Rothbard',`Property acquired by homesteading or voluntary exchange is absolute.`]],
  [['Bakunin',`Liberty and equality cannot be separated.`],['Rothbard',`No one may initiate force against another’s person or property.`]]]
 };
+/* KC[phil][column]: the key-concept note under each poster thesis, in the same order as POSTER */
+const KC = {
+soc:[
+ [`Follows from Historical materialism: the state grows out of the economic base, so it serves the class that owns it.`, `Follows from Character is formed by environment: whoever controls circumstances can reform character.`],
+ [`Key concept: Communism (the state withers away)`, `Key concept: Cooperative communities`],
+ [`Follows from Exploitation and alienation: bourgeois property rights are what make exploitation possible.`, `Follows from Character is formed by environment: no one chose their character, so punishment is undeserved.`],
+ [`Follows from Exploitation and alienation: alienation is caused by social conditions, so only changing them together ends it.`],
+ [`Key concept: Communism (common ownership)`],
+ [`Key concept: Communism (distribution by need)`]],
+sl:[
+ [`Key concept: Common good`, `Key concept: Original position and veil of ignorance`],
+ [`Follows from Two principles of justice: this system protects the equal liberties and spreads wealth widely enough to meet the second principle.`],
+ [`Key concept: Common good (the state removes hindrances)`],
+ [`Key concepts: Positive freedom and Common good`, `Follows from Two principles of justice: the equal basic liberties come first, so they cannot be traded for greater total welfare.`],
+ [`Key concept: Two principles of justice (the difference principle)`],
+ [`Key concept: Positive freedom`, `Follows from Original position and veil of ignorance: principles chosen under fair conditions are fair.`]],
+lib:[
+ [`Key concept: Government by consent`, `Follows from Minimal state and Self-ownership: it grows out of voluntary dealings, so no one’s rights are violated.`],
+ [`Key concept: Minimal state`],
+ [`Key concept: Natural rights`],
+ [`Key concept: Self-ownership (rights as side constraints)`],
+ [`Key concept: Labour theory of property`, `Key concept: Entitlement theory`],
+ [`Key concepts: Natural rights and Labour theory of property (you own yourself)`]],
+an:[
+ [`Key concept: The state is domination`],
+ [`Key concept: Collectivist federation`, `Key concept: Anarcho-capitalism`],
+ [`Follows from The state is a criminal aggressor: a monopoly on force judges its own case, so no rule can bind it.`],
+ [`Key concept: Social freedom`, `Key concept: Self-ownership and the non-aggression principle`],
+ [`Key concept: Collectivist federation (collective ownership)`, `Follows from Self-ownership and the non-aggression principle: you own yourself, so you own what you homestead, and taking it is aggression.`],
+ [`Key concept: Social freedom`, `Key concept: Self-ownership and the non-aggression principle`]]
+};
+/* CONCEPTS[thinker]: the key concepts from page one of the poster, word for word */
+const CONCEPTS = {
+Marx:[
+ [`Historical materialism`, `The way a society produces things (its economic base) shapes its laws, politics and ideas, including the state. History moves through struggle between the class that owns and the class that works.`],
+ [`Exploitation and alienation`, `Because capitalists privately own the means of production, workers must sell their labour and are paid less than the value they create (surplus value). They are cut off from their work, its product and each other.`],
+ [`Communism`, `After a transitional workers’ state, productive property is owned in common, goods are distributed by need, and the state withers away because there are no classes left to rule.`]],
+Owen:[
+ [`Character is formed by environment`, `People do not make their own character; circumstances and upbringing make it for them. So blame and punishment are misplaced, and changing conditions changes people.`],
+ [`Cooperative communities`, `Small, self-governing villages with common ownership and education for all, spread by peaceful example and rational reform rather than revolution.`]],
+Green:[
+ [`Positive freedom`, `Freedom is the real power to do or enjoy something worth doing. Being left alone is not enough if poverty, ignorance or ill health stop you from making the best of yourself.`],
+ [`Common good`, `Each person’s self-realisation is bound up with everyone else’s. Rights and the state are justified by this shared good, so the state’s job is to remove hindrances to it; it cannot make people moral.`]],
+Rawls:[
+ [`Original position and veil of ignorance`, `A thought experiment: free and equal people choose society’s principles without knowing their class, talents or values. Whatever is chosen under these fair conditions is just (“justice as fairness”).`],
+ [`Two principles of justice`, `First, equal basic liberties for all, which take priority and cannot be traded for greater total welfare. Second, fair equality of opportunity, with inequalities allowed only if they benefit the least advantaged (the difference principle).`]],
+Locke:[
+ [`Natural rights`, `Everyone is born free, equal and independent, with rights to life, liberty and property that exist before government. No one ought to harm another in these.`],
+ [`Labour theory of property`, `You own yourself, so you own your labour, so you own whatever unowned resource you mix it with, provided enough and as good is left for others.`],
+ [`Government by consent`, `People agree to form a government to protect their rights. Its power is limited to that purpose, and it may be resisted or replaced if it violates them.`]],
+Nozick:[
+ [`Self-ownership`, `Each person owns themselves and is a separate individual. Their rights are side constraints: limits on what may be done to them, even for the greater good.`],
+ [`Entitlement theory`, `A holding is just if it was justly acquired, freely transferred, or corrects a past injustice. Justice depends on history, not on a pattern, so redistributive taxation is on a par with forced labour.`],
+ [`Minimal state`, `Only a state limited to protection against force, theft and fraud, and the enforcement of contracts, is justified. It can arise from voluntary dealings without violating rights; anything more extensive violates them.`]],
+Bakunin:[
+ [`The state is domination`, `Every state, including a workers’ state, is rule by a minority over everyone else. The only legitimate authority is one you freely accept and can withdraw from, like taking an expert’s advice.`],
+ [`Social freedom`, `Freedom is not something individuals have apart from society: I am free only when everyone around me is equally free. So liberty and equality cannot be separated.`],
+ [`Collectivist federation`, `Replace the state with free communes and workers’ associations, federated from the bottom up. Land and tools are owned collectively, and workers receive the product of their labour.`]],
+Rothbard:[
+ [`Self-ownership and the non-aggression principle`, `Each person fully owns themselves and whatever they homestead or receive in voluntary exchange. No one may initiate force against another’s person or property.`],
+ [`The state is a criminal aggressor`, `The state lives by taxation, which is theft, and holds a forced monopoly on protection. As the final judge of its own powers, it cannot be reliably limited.`],
+ [`Anarcho-capitalism`, `Abolish the state and let the free market supply everything, including police, courts and defence, through competing private firms.`]]
+};
+const THINKERS = {soc:['Marx','Owen'], sl:['Green','Rawls'], lib:['Locke','Nozick'], an:['Bakunin','Rothbard']};
 /* POL[policy]: t = short title, stim = stimulus, real = true if the stimulus states real facts,
    q = question, col = the poster column the question points to, why = one-line reason */
 const POL = [
@@ -232,242 +322,226 @@ const NA_MARX_LIMITS = `Marx’s Limits thesis concerns property rights during t
 const ENT = [
 { // 1 e-scooters (Limits)
 soc:{t:{Owen:{v:'C', p2:`A licence prevents dangerous riding only if it trains riders; enforced through $400 fines alone, it punishes people for habits they were never taught to avoid.`, c:`The ban is justified only if the licence is training, not penalty.`}},
- na:{Marx:NA_MARX_LIMITS}, st:[2,'Owen'],
- sp:`No young rider chose to be careless; nobody taught them otherwise. Train them before they ride and you will have no one left to fine.`,
- nm:['sl',`it supports the law to remove a danger to others, not because character is formed by circumstances.`]},
-sl:{t:{Green:{v:'S', p2:`Injury caused by untrained riders is an obstacle to the self-realisation of pedestrians and riders, and a licence requirement removes it.`, c:`The ban is a legitimate use of state power.`}},
- st:[2,'Green'],
- sp:`A law like this does not make anyone good, and it should not try. It clears a danger out of the way so that everyone on the footpath, the rider included, can get on with making the best of themselves.`,
- nm:['lib',`it judges the law by rights and consent, not by self-development.`]},
-lib:{t:{Locke:{v:'OS', p2:`Riding without a licence harms no one’s life, liberty or possessions, so the ban overrides the rider’s liberty without protecting anyone’s rights.`, c:`The ban exceeds the limits of governmental power.`, alt:`Support is also accepted if you argue that untrained riders endanger other people’s lives and health.`}},
- st:[1,'Nozick'],
- sp:`The unlicensed rider has not used force, stolen or defrauded anyone. A state that stops her anyway, because of what might happen, has stopped being a night-watchman and become a guardian.`,
- nm:['an',`it rejects the state itself, not only its excess.`]},
-an:{t:{Rothbard:{v:'O', p2:`The state alone decides who needs a licence, what it requires and who is fined, and nothing prevents it extending the requirement.`, c:`The ban is an exercise of power with no reliable limit.`}},
- st:[0,'Bakunin'],
- sp:`I will gladly take a riding instructor’s advice, because I can weigh it and walk away from it. A rule handed down by the state and backed by a fine is command, not expertise.`,
- nm:['lib',`it accepts a state that keeps to protecting rights.`]}
+ na:{Marx:NA_MARX_LIMITS}},
+sl:{t:{Green:{v:'S', p2:`Injury caused by untrained riders is an obstacle to the self-realisation of pedestrians and riders, and a licence requirement removes it.`, c:`The ban is a legitimate use of state power.`}}},
+lib:{t:{Locke:{v:'OS', p2:`Riding without a licence harms no one’s life, liberty or possessions, so the ban overrides the rider’s liberty without protecting anyone’s rights.`, c:`The ban exceeds the limits of governmental power.`, alt:`Support is also accepted if you argue that untrained riders endanger other people’s lives and health.`}}},
+an:{t:{Rothbard:{v:'O', p2:`The state alone decides who needs a licence, what it requires and who is fined, and nothing prevents it extending the requirement.`, c:`The ban is an exercise of power with no reliable limit.`}}}
 },
 { // 2 wealth tax (Property)
-soc:{t:{Marx:{v:'CS', p2:`The tax takes 2% of large fortunes each year but leaves the shares and investment property that make them up in private hands.`, c:`The tax is at most a first step towards what is required.`, alt:`Support is also accepted if you argue the tax moves some property into common use.`}},
- st:[5,'Marx'],
- sp:`A person with ten million has long since run out of needs to spend it on, and a family without a home has one need that crowds out all the rest. Moving wealth from the first to the second is what distribution is for.`,
- nm:['sl',`it accepts large fortunes in principle and judges the tax by its effect on the least advantaged.`]},
-sl:{t:{Rawls:{v:'S', p2:`Fortunes left untaxed while people lack housing do not work to the greatest benefit of the least advantaged; taxing them to fund public housing improves that group’s position.`, c:`The tax makes the distribution more just.`}},
- st:[4,'Rawls'],
- sp:`Great fortunes are acceptable only when the arrangement that permits them also does the most for those at the bottom. Fortunes left untaxed while people go unhoused fail that test.`,
- nm:['soc',`it distributes by need and does not accept large private fortunes on any terms.`]},
+soc:{t:{Marx:{v:'CS', p2:`The tax takes 2% of large fortunes each year but leaves the shares and investment property that make them up in private hands.`, c:`The tax is at most a first step towards what is required.`, alt:`Support is also accepted if you argue the tax moves some property into common use.`}}},
+sl:{t:{Rawls:{v:'S', p2:`Fortunes left untaxed while people lack housing do not work to the greatest benefit of the least advantaged; taxing them to fund public housing improves that group’s position.`, c:`The tax makes the distribution more just.`}}},
 lib:{t:{Nozick:{v:'O', p2:`The tax takes from holdings because of their size, not because of any injustice in how they arose.`, c:`The tax takes just holdings and is therefore unjust.`},
-  Locke:{v:'OC', p2:`The fortunes taxed were built from labour and exchange, and the tax takes part of them for other people’s use.`, c:`The tax takes rightful property.`, alt:`Conditional is also accepted: the proviso in P1 lets you argue that fortunes are rightful only if others are left with enough.`}},
- st:[4,'Nozick'],
- sp:`Nobody is asking how these fortunes were made, only how big they are. If each was earned or given fairly, its size is no one’s grievance.`,
- nm:['an',`for anarchism all tax is theft, whatever its target.`]},
+  Locke:{v:'OC', p2:`The fortunes taxed were built from labour and exchange, and the tax takes part of them for other people’s use.`, c:`The tax takes rightful property.`, alt:`Conditional is also accepted: the proviso in P1 lets you argue that fortunes are rightful only if others are left with enough.`}}},
 an:{t:{Rothbard:{v:'O', p2:`The wealth tax takes such property without the owner’s consent.`, c:`The wealth tax is theft.`},
-  Bakunin:{v:'O', p2:`The tax leaves 98% of large fortunes in private hands and puts the remainder under state control, not workers’ control.`, c:`The tax does not achieve collective ownership.`}},
- st:[4,'Rothbard'],
- sp:`If a gang took two per cent of your savings every year and spent it on housing, you would call it robbery however good the houses were. The size of the gang does not change the name of the act.`,
- nm:['lib',`it objects to redistribution but accepts tax for a minimal state.`]}
+  Bakunin:{v:'O', p2:`The tax leaves 98% of large fortunes in private hands and puts the remainder under state control, not workers’ control.`, c:`The tax does not achieve collective ownership.`}}}
 },
 { // 3 flat tax (Principles)
-soc:{t:{Marx:{v:'O', p2:`A flat tax takes the same share from the cleaner and the executive regardless of need.`, c:`A flat tax distributes its burden by the wrong standard.`}},
- st:[5,'Marx'],
- sp:`One rate for everybody sounds equal. Applied to people whose needs are unequal, an equal measure gives an unequal result: twenty per cent of a cleaner’s wage is the rent, and twenty per cent of an owner’s income is nothing he will miss.`,
- nm:['sl',`it asks what each person can still do after the tax, not what each needs.`]},
+soc:{t:{Marx:{v:'O', p2:`A flat tax takes the same share from the cleaner and the executive regardless of need.`, c:`A flat tax distributes its burden by the wrong standard.`}}},
 sl:{t:{Green:{v:'O', p2:`A 20% tax takes from the cleaner money needed for basic capacities, but from the executive only surplus.`, c:`A flat tax reduces the freedom of the worst-off more than that of the best-off.`},
-  Rawls:{v:'C', p2:`A tax scale is fair only if the system it belongs to leaves the least advantaged as well off as any alternative would.`, c:`A flat tax is just only if it meets that test.`}},
- st:[5,'Green'],
- sp:`Count what each person can still do after the tax is paid. The low earner has lost part of what she needs to live decently; the high earner has lost nothing he needed for anything.`,
- nm:['soc',`it objects that the tax ignores need.`]},
-lib:{t:{Locke:{v:'CO', p2:`A tax on earnings takes part of what self-owning people produce, so it is acceptable only at the level needed to protect their rights; a single rate at least treats every person’s labour alike.`, c:`A flat tax is acceptable only if it funds no more than protection.`, alt:`Oppose is also accepted if you argue that 20% takes far more than protection requires.`}},
- st:[0,'Locke'],
- sp:`Everyone who enjoys the protection of government should pay a proportion of their estate to maintain it, provided their representatives have agreed to the charge. The same proportion from each is exactly that.`,
- nm:['an',`for anarchism no rate is legitimate without each person’s own agreement.`]},
+  Rawls:{v:'C', p2:`A tax scale is fair only if the system it belongs to leaves the least advantaged as well off as any alternative would.`, c:`A flat tax is just only if it meets that test.`}}},
+lib:{t:{Locke:{v:'CO', p2:`A tax on earnings takes part of what self-owning people produce, so it is acceptable only at the level needed to protect their rights; a single rate at least treats every person’s labour alike.`, c:`A flat tax is acceptable only if it funds no more than protection.`, alt:`Oppose is also accepted if you argue that 20% takes far more than protection requires.`}}},
 an:{t:{Rothbard:{v:'O', p2:`Any income tax, at any rate, takes earnings under threat of force.`, c:`A flat tax is aggression, however low or uniform the rate.`},
-  Bakunin:{v:'O', p2:`A flat tax treats people as equal on paper while leaving them unequal in wealth and subject to the state.`, c:`A flat tax delivers neither equality nor liberty.`}},
- st:[5,'Rothbard'],
- sp:`Twenty per cent, ten per cent, one rate or seven: the question is whether you agreed to pay. You didn’t, so the neat rate is beside the point.`,
- nm:['lib',`it accepts taxation for a limited state.`]}
+  Bakunin:{v:'O', p2:`A flat tax treats people as equal on paper while leaving them unequal in wealth and subject to the state.`, c:`A flat tax delivers neither equality nor liberty.`}}}
 },
 { // 4 free university (Principles)
-soc:{t:{Marx:{v:'S', p2:`Under fees, university goes to those who can pay; free provision makes it available to whoever needs it.`, c:`Free university distributes education by the right standard.`}},
- st:[0,'Owen'],
- sp:`Whatever a person becomes, their schooling helped make them so. To sell that schooling only to those who can pay is to decide in advance who will be capable and who will not.`,
- nm:['sl',`it argues from freedom as capacity, not from the formation of character.`]},
+soc:{t:{Marx:{v:'S', p2:`Under fees, university goes to those who can pay; free provision makes it available to whoever needs it.`, c:`Free university distributes education by the right standard.`}}},
 sl:{t:{Green:{v:'S', p2:`University develops that capacity, and fees put it out of reach of those who cannot pay.`, c:`Free university extends freedom.`},
-  Rawls:{v:'C', p2:`Graduates go on to earn more than most taxpayers, so free degrees for all are fair only if they do more for the least advantaged than spending the money elsewhere.`, c:`Free university is just only if it meets that test.`}},
- st:[5,'Green'],
- sp:`A young person shut out of study by its price has not been interfered with by anyone, and is still not free. Freedom is being able to make something of yourself, and that takes more than being left alone.`,
- nm:['soc',`it argues that circumstances form character.`]},
-lib:{t:{Locke:{v:'O', p2:`General taxation takes part of what self-owning people earn in order to pay for other people’s degrees.`, c:`Free university violates the liberty of those taxed to fund it.`}},
- st:[3,'Nozick'],
- sp:`We are told that society gains from graduates. There is no such creature to do the gaining: there is a plumber who is taxed and a law student who is taught, and the one is being used for the other.`,
- nm:['an',`it rejects state schooling because the state runs it.`]},
+  Rawls:{v:'C', p2:`Graduates go on to earn more than most taxpayers, so free degrees for all are fair only if they do more for the least advantaged than spending the money elsewhere.`, c:`Free university is just only if it meets that test.`}}},
+lib:{t:{Locke:{v:'O', p2:`General taxation takes part of what self-owning people earn in order to pay for other people’s degrees.`, c:`Free university violates the liberty of those taxed to fund it.`}}},
 an:{t:{Bakunin:{v:'CO', p2:`Free and equal education serves equality, but a university funded and governed by the state puts education under an authority that limits liberty.`, c:`Free university is right only if free associations, not the state, run it.`, alt:`Oppose is also accepted, since the proposal as it stands is state-run.`},
-  Rothbard:{v:'O', p2:`Funding it from general taxation takes people’s earnings under threat of force.`, c:`Tax-funded free university is aggression.`}},
- st:[0,'Bakunin'],
- sp:`Free education for everyone, yes, and equal. But a school paid for and governed by the state teaches obedience to its paymaster; let the communes and the workers’ associations run their own.`,
- nm:['soc',`it trusts government to provide education.`]}
+  Rothbard:{v:'O', p2:`Funding it from general taxation takes people’s earnings under threat of force.`, c:`Tax-funded free university is aggression.`}}}
 },
 { // 5 UBI (Individual vs collective)
-soc:{t:{Marx:{v:'C', p2:`A basic income gives individuals money but leaves the ownership of production, and so the conditions of wage labour, unchanged.`, c:`A basic income is at most a first step; it cannot secure flourishing by itself.`}},
- st:[3,'Marx'],
- sp:`Five hundred dollars a week will ease a worker’s life, and I do not sneer at that. But she will still own nothing but her labour and still sell it to those who own everything else; the payment changes her week, not her position.`,
- nm:['sl',`it treats a secure floor within the existing economy as enough.`]},
+soc:{t:{Marx:{v:'C', p2:`A basic income gives individuals money but leaves the ownership of production, and so the conditions of wage labour, unchanged.`, c:`A basic income is at most a first step; it cannot secure flourishing by itself.`}}},
 sl:{t:{Green:{v:'S', p2:`A guaranteed income gives each person the means to develop themselves, and a society of people able to do so is the common good.`, c:`A basic income serves the individual and the community together.`},
-  Rawls:{v:'SC', p2:`Leaving some people without a secure income so that the economy as a whole can grow sacrifices them for aggregate welfare; a guaranteed floor prevents this.`, c:`A basic income protects individuals from being sacrificed.`, alt:`Conditional is also accepted: Rawls doubted that people who choose not to work should be supported.`}},
- st:[4,'Rawls'],
- sp:`I do not ask that everyone end up with the same. I ask that whatever gaps remain can be justified to the person at the bottom, and a guaranteed floor under that person is a good start on the justification.`,
- nm:['soc',`it wants ownership changed, not a floor added.`]},
-lib:{t:{Nozick:{v:'O', p2:`A basic income taxes some individuals’ earnings to give income to others, in the name of what society owes its members.`, c:`A basic income sacrifices some individuals for others.`}},
- st:[4,'Nozick'],
- sp:`A guaranteed income decides in advance what everyone must end up with, then takes from whoever has more to make the picture come out right. Holdings that came about fairly are not raw material for somebody’s preferred pattern.`,
- nm:['an',`it objects to the taxing, not to the pattern.`]},
+  Rawls:{v:'SC', p2:`Leaving some people without a secure income so that the economy as a whole can grow sacrifices them for aggregate welfare; a guaranteed floor prevents this.`, c:`A basic income protects individuals from being sacrificed.`, alt:`Conditional is also accepted: Rawls doubted that people who choose not to work should be supported.`}}},
+lib:{t:{Nozick:{v:'O', p2:`A basic income taxes some individuals’ earnings to give income to others, in the name of what society owes its members.`, c:`A basic income sacrifices some individuals for others.`}}},
 an:{t:{Rothbard:{v:'O', p2:`A basic income is funded by taxing individuals in the name of what society owes its members.`, c:`A basic income has no legitimate basis.`},
-  Bakunin:{v:'CO', p2:`A secure income would free people from dependence on employers, but paid by the state it makes them dependent on the state instead.`, c:`A basic income frees people only if it comes from their own free associations.`, alt:`Oppose is also accepted, since the proposal is a state payment.`}},
- st:[3,'Rothbard'],
- sp:`They say society owes everyone a living. Society is not a person with a purse; the money comes out of particular pockets, under threat, and goes into others.`,
- nm:['lib',`it objects to the redistribution but accepts a state.`]}
+  Bakunin:{v:'CO', p2:`A secure income would free people from dependence on employers, but paid by the state it makes them dependent on the state instead.`, c:`A basic income frees people only if it comes from their own free associations.`, alt:`Oppose is also accepted, since the proposal is a state payment.`}}}
 },
 { // 6 Medicare (Principles)
-soc:{t:{Marx:{v:'O', p2:`Private insurance supplies care according to the premiums people can pay, where Medicare supplies it according to need.`, c:`Replacing Medicare distributes care by the wrong standard.`}},
- st:[5,'Marx'],
- sp:`Illness does not check a bank balance before it arrives. Hand health to the insurers and care will follow premiums, when it ought to follow sickness.`,
- nm:['sl',`it treats ill health as a barrier the state should remove.`]},
+soc:{t:{Marx:{v:'O', p2:`Private insurance supplies care according to the premiums people can pay, where Medicare supplies it according to need.`, c:`Replacing Medicare distributes care by the wrong standard.`}}},
 sl:{t:{Green:{v:'O', p2:`People who cannot afford treatment lack the capacity to do things worth doing; Medicare secures that capacity regardless of income, and premiums put it at risk for those who struggle to pay.`, c:`Replacing Medicare reduces freedom.`},
-  Rawls:{v:'O', p2:`A system in which care depends on the premium a person can afford leaves the least advantaged worse off than Medicare does.`, c:`Replacing Medicare makes the health system less just.`}},
- st:[2,'Green'],
- sp:`Sickness you cannot afford to treat is as real a barrier to a decent life as any law against you. Removing barriers of that kind is what a state is for, and this proposal puts one back.`,
- nm:['soc',`it argues from distribution by need.`]},
-lib:{t:{Locke:{v:'SC', p2:`Ending a tax-funded state scheme reduces government interference in how individuals pay for and choose their own care.`, c:`The policy increases liberty.`, alt:`Conditional is also accepted if you argue that being compelled to buy insurance is itself a limit on liberty.`}},
- st:[5,'Locke'],
- sp:`Under the state scheme my money is taken and my care is arranged for me. Let me deal with an insurer of my own choosing and I am interfered with less; that is a gain in liberty.`,
- nm:['an',`it rejects both the minister and the insurer.`]},
+  Rawls:{v:'O', p2:`A system in which care depends on the premium a person can afford leaves the least advantaged worse off than Medicare does.`, c:`Replacing Medicare makes the health system less just.`}}},
+lib:{t:{Locke:{v:'SC', p2:`Ending a tax-funded state scheme reduces government interference in how individuals pay for and choose their own care.`, c:`The policy increases liberty.`, alt:`Conditional is also accepted if you argue that being compelled to buy insurance is itself a limit on liberty.`}}},
 an:{t:{Bakunin:{v:'O', p2:`The policy hands care to insurance corporations and compels people to pay them, so care follows wealth and no one is freer.`, c:`The policy delivers neither liberty nor equality.`},
-  Rothbard:{v:'CO', p2:`Ending the tax-funded scheme removes one use of force, but compelling people to buy insurance is another.`, c:`The policy is acceptable only without the compulsion.`, alt:`Oppose is also accepted, since the policy as it stands includes the compulsion.`}},
- st:[1,'Bakunin'],
- sp:`You offer me a choice of masters: the minister or the insurance company. Let the nurses, the doctors and the communities they serve organise care among themselves and answer to each other.`,
- nm:['soc',`it would keep the state scheme.`]}
+  Rothbard:{v:'CO', p2:`Ending the tax-funded scheme removes one use of force, but compelling people to buy insurance is another.`, c:`The policy is acceptable only without the compulsion.`, alt:`Oppose is also accepted, since the policy as it stands includes the compulsion.`}}}
 },
 { // 7 grid (Property)
-soc:{t:{Marx:{v:'S', p2:`The grid is productive property that everyone depends on, and nationalising it takes it out of private hands.`, c:`The grid should be nationalised.`}},
- st:[4,'Marx'],
- sp:`Everyone needs power and a few shareholders own the wires, so everyone pays tribute to the few. Take the wires into common hands and the tribute ends.`,
- nm:['an',`it wants the grid held by its workers and users, not by the state.`]},
-sl:{t:{Rawls:{v:'C', p2:`Public ownership of the grid is justified only if it leaves the least advantaged better off than a regulated private grid would.`, c:`Nationalisation is just only if it does more for the least advantaged than the alternative.`}},
- st:[4,'Rawls'],
- sp:`Who owns the grid is not a matter of principle for me. Show me that public ownership leaves the poorest households better off than a well-regulated private grid, and I am for it; show me the reverse and I am against.`,
- nm:['soc',`for socialism common ownership is itself the goal.`]},
+soc:{t:{Marx:{v:'S', p2:`The grid is productive property that everyone depends on, and nationalising it takes it out of private hands.`, c:`The grid should be nationalised.`}}},
+sl:{t:{Rawls:{v:'C', p2:`Public ownership of the grid is justified only if it leaves the least advantaged better off than a regulated private grid would.`, c:`Nationalisation is just only if it does more for the least advantaged than the alternative.`}}},
 lib:{t:{Nozick:{v:'O', p2:`The grid’s owners acquired it by voluntary exchange, and nationalisation takes it from them without their consent.`, c:`Nationalisation takes a just holding and is therefore unjust.`},
-  Locke:{v:'O', p2:`The grid’s owners acquired it through labour and exchange, and nationalisation takes it from them without their consent.`, c:`Nationalisation takes rightful property.`}},
- st:[4,'Nozick'],
- sp:`The owners bought the grid from people entitled to sell it. A forced sale to the government, at whatever price, is still a taking; that the public would like to have it gives the public no title to it.`,
- nm:['an',`it opposes the state acquiring anything at all.`]},
+  Locke:{v:'O', p2:`The grid’s owners acquired it through labour and exchange, and nationalisation takes it from them without their consent.`, c:`Nationalisation takes rightful property.`}}},
 an:{t:{Bakunin:{v:'O', p2:`Nationalisation moves the grid from private owners to the state, not to the workers who run it and the communities that use it.`, c:`Nationalisation does not achieve collective ownership.`},
-  Rothbard:{v:'O', p2:`The owners acquired the grid by voluntary exchange, and compulsory purchase takes it without their consent.`, c:`Nationalisation is theft.`}},
- st:[4,'Bakunin'],
- sp:`You have taken the grid from the capitalist, given it to the minister, and called the workers free. Property of the state is not property of the people; the official is merely the new owner.`,
- nm:['soc',`it accepts state ownership.`]}
+  Rothbard:{v:'O', p2:`The owners acquired the grid by voluntary exchange, and compulsory purchase takes it without their consent.`, c:`Nationalisation is theft.`}}}
 },
 { // 8 social media (Limits)
 soc:{t:{Owen:{v:'SC', p2:`The ban punishes no child; it removes a circumstance that is forming children’s characters badly, which is prevention.`, c:`The ban is a proper use of government.`, alt:`Conditional is also accepted if you argue that teaching children to use social media well would prevent harm better than prohibition.`}},
- na:{Marx:NA_MARX_LIMITS}, st:[0,'Owen'],
- sp:`A child’s character is being shaped every hour by machines built to sell her attention. If government may arrange a child’s surroundings for her good at all, it may certainly remove this one.`,
- nm:['sl',`it says the law lifts a barrier and cannot form anyone’s character.`]},
-sl:{t:{Green:{v:'S', p2:`Compulsive social media use obstructs children’s development, and children cannot remove that obstacle themselves.`, c:`The ban is a legitimate use of state power.`}},
- st:[2,'Green'],
- sp:`Nobody is made wise by being banned from something. But a fourteen-year-old cannot be expected to out-argue a product engineered to hold her, and the law can take that weight off her until she can.`,
- nm:['soc',`it holds that government should shape the circumstances that form character.`]},
-lib:{t:{Locke:{v:'O', p2:`The ban overrides the right of parents to govern their own children’s upbringing: a parent’s permission does not exempt a child.`, c:`The ban exceeds the limits of governmental power.`}},
- st:[2,'Locke'],
- sp:`Children are under the care of their parents until they can reason for themselves; that authority was never the legislature’s. A government that decides what my daughter may read has taken a power nobody gave it.`,
- nm:['an',`it distrusts any power the state gives itself.`]},
-an:{t:{Rothbard:{v:'O', p2:`Enforcing the ban means checking users’ ages, and only the state decides how far that checking goes.`, c:`The ban expands state power with no reliable limit.`}},
- st:[2,'Rothbard'],
- sp:`To keep children off these sites, the age of every adult who logs in must be checked. Today the state promises to stop there; and who rules on whether it has stopped? The state.`,
- nm:['lib',`it objects on behalf of parents’ rights, not to state power as such.`]}
+ na:{Marx:NA_MARX_LIMITS}},
+sl:{t:{Green:{v:'S', p2:`Compulsive social media use obstructs children’s development, and children cannot remove that obstacle themselves.`, c:`The ban is a legitimate use of state power.`}}},
+lib:{t:{Locke:{v:'O', p2:`The ban overrides the right of parents to govern their own children’s upbringing: a parent’s permission does not exempt a child.`, c:`The ban exceeds the limits of governmental power.`}}},
+an:{t:{Rothbard:{v:'O', p2:`Enforcing the ban means checking users’ ages, and only the state decides how far that checking goes.`, c:`The ban expands state power with no reliable limit.`}}}
 },
 { // 9 compulsory voting (Need and source)
 soc:{t:{Marx:{v:'S', p2:`Where voting is voluntary the poorest vote least, so the state answers still more to the dominant class; compulsory voting brings the whole working class to the ballot.`, c:`Compulsory voting weakens the dominant class’s hold on the state.`},
-  Owen:{v:'S', p2:`Compulsory voting makes taking part in public decisions a habit for every citizen, and habits of this kind form character.`, c:`Compulsory voting is a proper use of government.`}},
- st:[0,'Marx'],
- sp:`Leave voting to those with the time and confidence for it and you will get a parliament of the comfortable. Bring every worker to the ballot box and the majority at least has the numbers on its side.`,
- nm:['sl',`it wants equal political liberty for all citizens, not power for one class.`]},
+  Owen:{v:'S', p2:`Compulsory voting makes taking part in public decisions a habit for every citizen, and habits of this kind form character.`, c:`Compulsory voting is a proper use of government.`}}},
 sl:{t:{Rawls:{v:'S', p2:`Not knowing whether they would be rich or poor, such persons would choose a rule that stops political influence following wealth, as it does when the poorest vote least.`, c:`Compulsory voting is a rule free and equal persons would choose.`},
-  Green:{v:'SO', p2:`Compulsory voting brings every citizen into deciding the common good, so the state’s authority rests on the will of all citizens and not only of those who turn out.`, c:`Compulsory voting strengthens the basis of the state’s authority.`, alt:`Oppose is also accepted if you argue that a fine is coercion, which Green says cannot ground authority.`}},
- st:[1,'Rawls'],
- sp:`An equal right to vote means little if one class reliably uses it and another does not. A rule that brings everyone to the booth keeps the equal liberty equal in practice.`,
- nm:['soc',`it sees the vote as a weapon for the working class.`]},
+  Green:{v:'SO', p2:`Compulsory voting brings every citizen into deciding the common good, so the state’s authority rests on the will of all citizens and not only of those who turn out.`, c:`Compulsory voting strengthens the basis of the state’s authority.`, alt:`Oppose is also accepted if you argue that a fine is coercion, which Green says cannot ground authority.`}}},
 lib:{t:{Locke:{v:'O', p2:`Consent that is compelled under threat of a fine is not consent.`, c:`Compulsory voting undermines the consent that makes government legitimate.`},
-  Nozick:{v:'O', p2:`Staying home on election day violates no one’s rights, and fining a person for it does.`, c:`Compulsory voting is a rights violation, however the state arose.`}},
- st:[0,'Locke'],
- sp:`A government draws its authority from the agreement of the governed. Agreement extracted with a fine is no agreement; a person may consent by voting, and may withhold consent by staying home.`,
- nm:['an',`it denies that voting could make a government legitimate at all.`]},
-an:{t:{Bakunin:{v:'O', p2:`Compulsory voting forces each person to take part in choosing rulers, so their participation is neither freely given nor able to be withheld.`, c:`Compulsory voting is not legitimate.`}},
- st:[0,'Bakunin'],
- sp:`First they tell me the state rules by my choice, then they fine me if I decline to choose. I am not free because I am permitted to pick my master, and still less when I am ordered to.`,
- nm:['lib',`it accepts government that rests on real consent.`]}
+  Nozick:{v:'O', p2:`Staying home on election day violates no one’s rights, and fining a person for it does.`, c:`Compulsory voting is a rights violation, however the state arose.`}}},
+an:{t:{Bakunin:{v:'O', p2:`Compulsory voting forces each person to take part in choosing rulers, so their participation is neither freely given nor able to be withheld.`, c:`Compulsory voting is not legitimate.`}}}
 },
 { // 10 vaccination (Individual vs collective)
-soc:{t:{Marx:{v:'S', p2:`Protection from infectious disease is a social condition that can be secured only collectively, by nearly everyone being vaccinated.`, c:`The rule secures a condition of each child’s flourishing.`}},
- st:[3,'Marx'],
- sp:`No child is kept safe from measles by her own family’s efforts alone; she is kept safe by what everyone around her has done. Health of this kind is made together or not at all.`,
- nm:['sl',`it says the rule removes a danger and stops there.`]},
+soc:{t:{Marx:{v:'S', p2:`Protection from infectious disease is a social condition that can be secured only collectively, by nearly everyone being vaccinated.`, c:`The rule secures a condition of each child’s flourishing.`}}},
 sl:{t:{Green:{v:'S', p2:`A child protected from disease is better able to develop, and so are the children around her, so the rule serves each child and the community together.`, c:`The rule involves no real sacrifice of the individual.`},
-  Rawls:{v:'CS', p2:`Babies too young to be vaccinated are individuals put at risk by others’ choices, so the rule is acceptable where it protects them and not merely because overall figures improve.`, c:`The rule is justified only as protection of identifiable individuals.`, alt:`Support is also accepted if you argue the rule does protect those individuals.`}},
- st:[2,'Green'],
- sp:`The rule does not make any parent virtuous. It removes a danger from the rooms where small children spend their days, and the child who is protected gains as much as the children around her.`,
- nm:['soc',`it treats health as something made collectively.`]},
-lib:{t:{Nozick:{v:'O', p2:`The rule denies a family childcare in order to lower the risk to everyone else.`, c:`The rule sacrifices some individuals for others.`}},
- st:[3,'Nozick'],
- sp:`A centre’s owner may turn away whomever she likes. What the government may not do is bar a family from every centre in the country so that the figures for everyone else improve.`,
- nm:['an',`it objects to advice being turned into command.`]},
+  Rawls:{v:'CS', p2:`Babies too young to be vaccinated are individuals put at risk by others’ choices, so the rule is acceptable where it protects them and not merely because overall figures improve.`, c:`The rule is justified only as protection of identifiable individuals.`, alt:`Support is also accepted if you argue the rule does protect those individuals.`}}},
+lib:{t:{Nozick:{v:'O', p2:`The rule denies a family childcare in order to lower the risk to everyone else.`, c:`The rule sacrifices some individuals for others.`}}},
 an:{t:{Rothbard:{v:'O', p2:`The rule penalises particular families in the name of the community’s health.`, c:`The rule has no legitimate basis.`},
-  Bakunin:{v:'OC', p2:`Protection from disease is something people secure together, but the rule secures it by state command and not by persuasion and free agreement.`, c:`The rule is the wrong way to secure a shared good.`, alt:`Conditional is also accepted if you argue it would be right as a freely agreed community rule.`}},
- st:[0,'Bakunin'],
- sp:`On questions of medicine I listen to the doctor, and I would have every parent do the same. But I listen because I am persuaded; once the state makes the doctor’s advice a condition of entry, science has become a police matter.`,
- nm:['lib',`it objects on behalf of individual rights.`]}
+  Bakunin:{v:'OC', p2:`Protection from disease is something people secure together, but the rule secures it by state command and not by persuasion and free agreement.`, c:`The rule is the wrong way to secure a shared good.`, alt:`Conditional is also accepted if you argue it would be right as a freely agreed community rule.`}}}
 },
 { // 11 police search (Individual vs collective)
-soc:{t:{Marx:{v:'O', p2:`Search powers act on individuals one at a time and leave unchanged the social conditions that produce violence.`, c:`The search power cannot deliver the safety it promises.`}},
- st:[2,'Owen'],
- sp:`You search a young man’s pockets for a knife and never ask what made him think he needed one. Change the conditions that produced him and the knife disappears; search him and you have one more youth who has learned to hate a uniform.`,
- nm:['sl',`it objects on behalf of the innocent person searched.`]},
+soc:{t:{Marx:{v:'O', p2:`Search powers act on individuals one at a time and leave unchanged the social conditions that produce violence.`, c:`The search power cannot deliver the safety it promises.`}}},
 sl:{t:{Rawls:{v:'O', p2:`Warrantless search subjects innocent individuals to intrusion in order to raise overall safety: ninety-nine searches in a hundred find nothing.`, c:`The search power is unjust.`},
-  Green:{v:'S', p2:`Safety from violence is a condition of everyone’s self-realisation, including that of the person searched.`, c:`The search power serves the individual and the community together.`}},
- st:[3,'Rawls'],
- sp:`The area may well be safer overall. But each person stopped and searched without cause is paying for that safety with her own liberty, and a gain to the total does not make her loss acceptable.`,
- nm:['lib',`it appeals to rights held before any government exists.`]},
-lib:{t:{Nozick:{v:'O', p2:`Searching a person who has done nothing, in order to make others safer, uses that person for others’ benefit.`, c:`The search power sacrifices individuals for others.`}},
- st:[2,'Locke'],
- sp:`My person and my pockets were mine before any government existed, and I gave magistrates power in order to protect them. An officer who may go through them on no suspicion at all holds exactly the arbitrary power I set up government to escape.`,
- nm:['an',`it denies that any rule can keep state power within bounds.`]},
+  Green:{v:'S', p2:`Safety from violence is a condition of everyone’s self-realisation, including that of the person searched.`, c:`The search power serves the individual and the community together.`}}},
+lib:{t:{Nozick:{v:'O', p2:`Searching a person who has done nothing, in order to make others safer, uses that person for others’ benefit.`, c:`The search power sacrifices individuals for others.`}}},
 an:{t:{Rothbard:{v:'O', p2:`The policy searches particular individuals in the name of society’s safety.`, c:`The search power has no legitimate basis.`},
-  Bakunin:{v:'O', p2:`A power that lets officers stop anyone at will leaves no one in the area free.`, c:`The search power reduces everyone’s freedom.`}},
- st:[2,'Rothbard'],
- sp:`Who designates the area? The state. Who decides whom to search inside it? The state’s officer. Who hears your complaint afterwards? The state’s court. That is what they call a safeguard.`,
- nm:['lib',`it believes rights and warrants can limit a government.`]}
+  Bakunin:{v:'O', p2:`A power that lets officers stop anyone at will leaves no one in the area free.`, c:`The search power reduces everyone’s freedom.`}}}
 },
 { // 12 assemblies (Optimal form)
 soc:{t:{Owen:{v:'S', p2:`A residents’ assembly lets a community govern itself directly instead of through elected office-holders.`, c:`Residents’ assemblies should replace councils.`},
-  Marx:{v:'CS', p2:`An assembly lets residents govern themselves directly, but while property stays in private hands it still operates within a class society.`, c:`Assemblies are a step towards free association only if class relations change too.`, alt:`Support is also accepted if you argue that direct self-government is itself a step towards that association.`}},
- st:[1,'Owen'],
- sp:`A community of a few thousand can manage its own affairs, and its members learn to co-operate by doing so. Give the residents the decisions and you give them the habit of acting for each other.`,
- nm:['an',`it wants no authority standing above the assembly.`]},
-sl:{t:{Rawls:{v:'C', p2:`Binding decisions by the few who attend an assembly secure equal liberties only if the assembly sits under constitutional limits it cannot override.`, c:`Assemblies are acceptable only under such limits.`}},
- st:[1,'Rawls'],
- sp:`I welcome citizens deciding together. But a meeting of whoever turns up can vote away the liberties of whoever did not, so the assembly must sit under a constitution it cannot override.`,
- nm:['lib',`it objects to how much the assembly may decide.`]},
-lib:{t:{Nozick:{v:'O', p2:`An assembly with binding power over rates, land use and services does far more than protect against force, theft and fraud.`, c:`The assembly, like the council, exceeds what is justified.`}},
- st:[1,'Nozick'],
- sp:`It makes no difference to me whether my neighbours vote on my property directly or elect councillors to do it. What matters is how much they may decide, and an assembly that can bind me on anything it likes may decide far too much.`,
- nm:['sl',`it accepts wide local powers so long as a constitution protects equal liberties.`]},
+  Marx:{v:'CS', p2:`An assembly lets residents govern themselves directly, but while property stays in private hands it still operates within a class society.`, c:`Assemblies are a step towards free association only if class relations change too.`, alt:`Support is also accepted if you argue that direct self-government is itself a step towards that association.`}}},
+sl:{t:{Rawls:{v:'C', p2:`Binding decisions by the few who attend an assembly secure equal liberties only if the assembly sits under constitutional limits it cannot override.`, c:`Assemblies are acceptable only under such limits.`}}},
+lib:{t:{Nozick:{v:'O', p2:`An assembly with binding power over rates, land use and services does far more than protect against force, theft and fraud.`, c:`The assembly, like the council, exceeds what is justified.`}}},
 an:{t:{Bakunin:{v:'S', p2:`Residents’ assemblies put decisions in the hands of the people they affect, at the lowest level.`, c:`Residents’ assemblies should replace councils.`},
-  Rothbard:{v:'O', p2:`An assembly whose decisions bind every resident is still a monopoly on decision-making, now run by majority vote.`, c:`Assemblies should not replace councils.`}},
- st:[1,'Bakunin'],
- sp:`At last, a decision made by the people who must live with it, in the place where they live. Let these assemblies federate freely with one another, and there is nothing left for the capital to do.`,
- nm:['soc',`it values the assembly for teaching co-operation and accepts a government above it.`]}
+  Rothbard:{v:'O', p2:`An assembly whose decisions bind every resident is still a monopoly on decision-making, now run by majority vote.`, c:`Assemblies should not replace councils.`}}}
 }
 ];
+
+/* WHO[policy][phil]: Who's Talking speeches, written in plain language around one key concept.
+   sp = speech; st = [column, thinker] of the poster thesis it reasons from; nm = [near-miss philosophy, why it is not that one] */
+const WHO = [
+{ // 1 e-scooters
+soc:{st:[2,'Owen'], sp:`Nobody chooses their own character. A teenager who rides carelessly was never taught to ride any other way, so fining them is pointless. Teach them properly and there will be no one left to fine.`,
+ nm:['sl',`it backs the law to remove a danger. It does not say that people’s characters are made for them.`]},
+sl:{st:[2,'Green'], sp:`A law cannot make anyone a good person, and it should not try. What it can do is remove things that stop people making the best of their lives, and being hit by an untrained rider is one of those things.`,
+ nm:['lib',`it asks whether anyone’s rights were violated, not whether people can make the best of their lives.`]},
+lib:{st:[1,'Nozick'], sp:`Government is justified for one job only: protecting us from force, theft and fraud. A rider with no licence has done none of those things, so stopping her goes beyond what any government may do.`,
+ nm:['an',`it says no government is justified at all, not even a small one.`]},
+an:{st:[0,'Bakunin'], sp:`I will happily take advice from a riding instructor, because I can choose whether to follow it. A rule forced on me by the state is different: no government has the right to command me.`,
+ nm:['lib',`it accepts a government as long as it only protects people’s rights.`]}
+},
+{ // 2 wealth tax
+soc:{st:[5,'Marx'], sp:`Society’s wealth should go where it is needed. A person with ten million dollars has far more than they could ever need, a family with no home needs one badly, and the owners got rich from other people’s work in the first place.`,
+ nm:['sl',`it allows big fortunes as long as the poorest benefit. Socialism wants goods shared by need.`]},
+sl:{st:[4,'Rawls'], sp:`Imagine choosing the rules of society without knowing whether you would be rich or homeless. You would allow big fortunes only if they also helped the people at the bottom, and untaxed fortunes beside homelessness fail that test.`,
+ nm:['soc',`it wants private ownership of productive property ended, not just taxed.`]},
+lib:{st:[4,'Nozick'], sp:`What matters is how a fortune was made, not how big it is. If it was earned or given fairly, it belongs to its owner. Government’s job is to protect people’s property, not to share it out.`,
+ nm:['an',`it says all tax is theft and wants no government at all. This speaker gives government a job.`]},
+an:{st:[4,'Rothbard'], sp:`Tax is theft. If a gang took two per cent of your savings every year you would call it robbery, and it does not stop being robbery because the gang calls itself a government.`,
+ nm:['lib',`it accepts some tax to pay for a small government that protects rights.`]}
+},
+{ // 3 flat tax
+soc:{st:[5,'Marx'], sp:`Charging everyone the same rate sounds equal, but people’s needs are not equal. Twenty per cent of a cleaner’s wage is the rent money; twenty per cent of an owner’s income is money he will never miss. Burdens should follow need.`,
+ nm:['sl',`it asks what each person is still able to do after the tax, not what each person needs.`]},
+sl:{st:[5,'Green'], sp:`Freedom means really being able to make the best of yourself, not just being left alone. After this tax the cleaner can do less with her life and the executive can do just as much, so it takes freedom from the person who has least.`,
+ nm:['soc',`it says burdens and goods should follow need, and blames private ownership.`]},
+lib:{st:[0,'Locke'], sp:`People set up government to protect their lives, liberty and property, and it is fair that each pays a share of the cost. As long as our elected representatives agree to the tax, the same share from everyone is exactly right.`,
+ nm:['an',`it says no tax is acceptable, because no government is legitimate.`]},
+an:{st:[5,'Rothbard'], sp:`Twenty per cent or two per cent, the rate does not matter. Any tax takes your money by force without your agreement, and no one, including a government, has the right to do that.`,
+ nm:['lib',`it accepts tax that pays for a small government protecting rights.`]}
+},
+{ // 4 free university
+soc:{st:[0,'Owen'], sp:`People become what their upbringing and education make them. If only those who can pay get a university education, we have decided in advance who will be capable and who will not. Government should change those conditions.`,
+ nm:['sl',`it talks about freedom as the power to make the best of yourself, not about character being formed by circumstances.`]},
+sl:{st:[5,'Green'], sp:`A student who cannot afford university has not been stopped by anyone, but she is still not free. Real freedom is the power to make the best of yourself, and the state should remove whatever stands in the way of that.`,
+ nm:['soc',`it says circumstances form people’s characters, so government should reshape those circumstances.`]},
+lib:{st:[3,'Nozick'], sp:`People say “society” gains from graduates, but there is only a plumber who is taxed and a student who is taught. Government exists to protect each person’s rights, and it may not use one person for another’s benefit.`,
+ nm:['an',`it objects because the state is involved at all. This speaker accepts a government that protects rights.`]},
+an:{st:[0,'Bakunin'], sp:`Education should be free and equal for everyone. But a university paid for and controlled by the state teaches people to obey the state. Let free communities and workers’ associations run their own.`,
+ nm:['soc',`it trusts government to provide education. Anarchism trusts no government.`]}
+},
+{ // 5 UBI
+soc:{st:[3,'Marx'], sp:`Five hundred dollars a week will make a worker’s life easier, and that is good. But she will still own nothing except her ability to work, and will still have to sell it to the people who own everything else. Only changing who owns things changes that.`,
+ nm:['sl',`it is satisfied with a guaranteed floor inside the existing economy.`]},
+sl:{st:[4,'Rawls'], sp:`Imagine not knowing whether you would be born rich or poor. You would want a guaranteed floor that no one can fall below, and you would accept some people being richer only if the arrangement helps those at the bottom too.`,
+ nm:['soc',`it wants ownership changed, not just a safety net added.`]},
+lib:{st:[4,'Nozick'], sp:`A basic income decides in advance what everyone should end up with, then takes from those who have more to make it so. If people earned what they have fairly, it is theirs; government is there to protect it, not to rearrange it.`,
+ nm:['an',`it objects to all tax and to government itself. This speaker objects only to rearranging who has what.`]},
+an:{st:[3,'Rothbard'], sp:`They say society owes everyone a living. But there is no such thing as society, only individual people, and this money is taken from some of them by force. The state has no right to exist, let alone to do this.`,
+ nm:['lib',`it objects to the redistribution but accepts a small government.`]}
+},
+{ // 6 Medicare
+soc:{st:[5,'Marx'], sp:`Illness does not check your bank balance before it arrives. Health care should go to whoever is sick, not to whoever can pay, and insurance companies exist to make a profit for their owners.`,
+ nm:['sl',`it talks about the state removing obstacles to a decent life, not about need and private profit.`]},
+sl:{st:[2,'Green'], sp:`Being sick and unable to afford treatment stops you living a decent life just as surely as a law against you would. Removing obstacles like that is exactly what the state is for, and this plan puts one back.`,
+ nm:['soc',`it argues from need and against private profit.`]},
+lib:{st:[5,'Locke'], sp:`I own myself, so how I look after my own health is my decision. Government exists to protect my rights, not to run my health care, so ending the state scheme gives me back a freedom that was always mine.`,
+ nm:['an',`it rejects government altogether. This speaker says government has a proper job: protecting rights.`]},
+an:{st:[1,'Bakunin'], sp:`You are offering me a choice of masters: the government minister or the insurance company. I want neither. Let nurses, doctors and their communities organise health care themselves and answer to each other.`,
+ nm:['soc',`it would keep the government scheme.`]}
+},
+{ // 7 grid
+soc:{st:[4,'Marx'], sp:`Everyone needs electricity, and a few shareholders own the wires, so everyone ends up paying the few. Things we all depend on should be owned in common, not run for private profit.`,
+ nm:['an',`it also wants common ownership, but by workers and communities, never by the state.`]},
+sl:{st:[4,'Rawls'], sp:`I do not mind who owns the grid. What matters is which arrangement leaves the poorest households better off. If public ownership does that, I support it; if a well-regulated private grid does it better, I support that instead.`,
+ nm:['soc',`for socialism, common ownership is the goal in itself.`]},
+lib:{st:[4,'Nozick'], sp:`The owners bought the grid fairly from people who had the right to sell it. That makes it theirs, and a forced sale is still taking it. Government’s job is to protect property, not to seize it.`,
+ nm:['an',`it agrees about property but says government should not exist at all.`]},
+an:{st:[4,'Bakunin'], sp:`You take the grid from the capitalist, hand it to the government minister, and call that freedom for the workers. It is only a new boss. The people who run the grid and the communities who use it should own it together.`,
+ nm:['soc',`it is happy for the state to own the grid.`]}
+},
+{ // 8 social media
+soc:{st:[0,'Owen'], sp:`A child’s character is formed by what surrounds her, and right now it is being formed by apps designed to sell her attention. Government can change a child’s surroundings for the better, and it should remove this one.`,
+ nm:['sl',`it says the law only removes an obstacle and cannot shape anyone’s character.`]},
+sl:{st:[2,'Green'], sp:`Banning something does not make anyone wiser, and the law cannot make people good. But a fourteen-year-old cannot be expected to resist a product built to hook her, so the law can remove that obstacle until she is old enough to choose.`,
+ nm:['soc',`it says government should shape the surroundings that form a child’s character.`]},
+lib:{st:[2,'Locke'], sp:`Parents had the right to raise their own children long before any government existed. A government that decides what my daughter may read, even when I give permission, has taken a power that nobody gave it.`,
+ nm:['an',`it distrusts all state power. This speaker accepts government but says it has gone past its limits.`]},
+an:{st:[2,'Rothbard'], sp:`To keep children off these sites, every adult’s age has to be checked too. The government promises it will stop there, but who decides whether it has stopped? The government. That is why state power can never be limited.`,
+ nm:['lib',`it believes rights can keep a government within limits.`]}
+},
+{ // 9 compulsory voting
+soc:{st:[0,'Marx'], sp:`The state usually serves the class that owns things. When voting is optional, the poorest people vote the least and the comfortable get the parliament they want. Make everyone vote and at least the working majority has the numbers.`,
+ nm:['sl',`it wants an equal political voice for every citizen, not more power for one class.`]},
+sl:{st:[1,'Rawls'], sp:`An equal right to vote is not worth much if the well-off use it and the poor do not. Imagine not knowing which group you would be in: you would choose a rule that keeps everyone’s political voice equal in practice.`,
+ nm:['soc',`it sees the vote as a tool for the working class against the owners.`]},
+lib:{st:[0,'Locke'], sp:`A government gets its authority from the consent of the people it governs. Consent that is forced out of you with a fine is not consent at all. People must be free to say yes by voting, or to stay home.`,
+ nm:['an',`it says voting could never make a government legitimate.`]},
+an:{st:[0,'Bakunin'], sp:`First they tell me the government rules because I chose it. Then they fine me if I refuse to choose. Being allowed to pick my master does not make me free, and being ordered to pick one certainly does not.`,
+ nm:['lib',`it accepts a government that rests on real consent.`]}
+},
+{ // 10 vaccination
+soc:{st:[3,'Marx'], sp:`No family can protect its own child from measles alone. Children are kept safe by what everyone does together, so health is something we build collectively or not at all, and what the whole community needs comes before one family’s choice.`,
+ nm:['sl',`it says the rule removes an obstacle so each child can develop. It does not put the collective first.`]},
+sl:{st:[2,'Green'], sp:`The state cannot make parents good people, and it is not trying to. Its job is to remove obstacles that stop each child making the best of her life, and a serious disease in the childcare room is one of those obstacles.`,
+ nm:['soc',`it says health is built collectively and puts the community’s needs first.`]},
+lib:{st:[3,'Nozick'], sp:`A childcare owner may turn away anyone she likes; that is her right. But government exists to protect each person’s rights, and it may not shut one family out everywhere just to make the numbers better for everyone else.`,
+ nm:['an',`it objects to the state giving orders at all.`]},
+an:{st:[0,'Bakunin'], sp:`When it comes to medicine I listen to the doctor, and every parent should. But I listen because I am convinced, not because I am forced. Once the state makes the doctor’s advice compulsory, it is no longer advice but an order.`,
+ nm:['lib',`it objects on behalf of individual rights, and accepts a government that protects them.`]}
+},
+{ // 11 police search
+soc:{st:[2,'Owen'], sp:`You search a young man’s pockets for a knife but never ask why he felt he needed one. His character was formed by the conditions he grew up in. Change those conditions through education and the knife disappears; punish him and nothing changes.`,
+ nm:['sl',`it objects on behalf of the innocent person’s liberties, not because of how character is formed.`]},
+sl:{st:[3,'Rawls'], sp:`Imagine you did not know whether you would be the person stopped and searched. You would insist that everyone’s basic liberties come first and cannot be traded away, even if the total amount of safety goes up.`,
+ nm:['lib',`it says rights come from owning yourself and exist before government. This speaker uses the test of choosing rules without knowing your place.`]},
+lib:{st:[2,'Locke'], sp:`My right to my own body and belongings existed before any government did. I agreed to government so that those rights would be protected. A police officer who can search me for no reason has exactly the kind of unlimited power government was meant to prevent.`,
+ nm:['an',`it says no rule can ever limit state power. This speaker thinks rights can.`]},
+an:{st:[2,'Rothbard'], sp:`Who chooses the search zones? The government. Who decides who gets searched? The government’s police. Who hears your complaint? The government’s court. A state always judges its own case, so its power can never be limited.`,
+ nm:['lib',`it believes rights and warrants can keep a government in check.`]}
+},
+{ // 12 assemblies
+soc:{st:[1,'Owen'], sp:`A community of a few thousand people can run its own affairs, and people learn to co-operate by doing it. Small, self-governing communities that share decisions are how a better society is built, peacefully and by example.`,
+ nm:['an',`it wants no government above the assembly. This speaker is happy to reform peacefully alongside government.`]},
+sl:{st:[1,'Rawls'], sp:`I welcome citizens deciding things together. But a meeting of whoever turns up could vote away the basic liberties of those who stayed home. So the assembly must sit under a constitution that protects everyone’s equal liberties.`,
+ nm:['lib',`it objects to how much the assembly can decide about people’s property. This speaker lets it decide a lot, as long as equal liberties are protected.`]},
+lib:{st:[1,'Nozick'], sp:`It makes no difference whether my neighbours vote on my property directly or elect councillors to do it. The only proper job of any government is to protect us from force, theft and fraud, and this assembly could do far more than that.`,
+ nm:['sl',`it accepts wide local powers as long as a constitution protects equal liberties.`]},
+an:{st:[1,'Bakunin'], sp:`At last, decisions made by the people who have to live with them. Let these assemblies join together freely from the bottom up, and soon there will be no need for a government above them at all.`,
+ nm:['soc',`it values the assembly for teaching co-operation and is content to have a government above it.`]}
+}
+];
+WHO.forEach((W, p) => PK.forEach(ph => Object.assign(ENT[p][ph], W[ph])));
 
 /* ============================ HELPERS ============================ */
 const $ = (t, a, ...k) => {
@@ -489,6 +563,14 @@ const cell = (ph, col) => POSTER[ph][col];
 const whoOf = (ph, col, who) => cell(ph, col).length === 1 ? cell(ph, col)[0][0] : who;
 const thesis = (ph, col, who) => { const c = cell(ph, col); const f = c.find(x => x[0] === who) || (c.length === 1 ? c[0] : null); return f ? f[1] : ''; };
 const entryOf = r => ENT[r.p][r.ph];
+const kcOf = (ph, col, who) => { const i = cell(ph, col).findIndex(x => x[0] === who); return KC[ph][col][i < 0 ? 0 : i]; };
+const philOfThinker = w => PK.find(k => THINKERS[k].includes(w));
+const INITIALS = {Marx:'M', Owen:'O', Green:'G', Rawls:'Ra', Locke:'L', Nozick:'N', Bakunin:'B', Rothbard:'Ro'};
+const avatar = (w, lg) => $('span', {class: 'av' + (lg ? ' lg' : ''), style: philStyle(philOfThinker(w)), 'aria-hidden': 'true'}, INITIALS[w]);
+function conceptList(ph) {
+  return THINKERS[ph].map(w => $('div', {}, $('div', {class: 'thinker'}, avatar(w, true), w),
+    CONCEPTS[w].map(([n, d], i) => $('p', {class: 'concept'}, $('b', {}, (i + 1) + ' ' + n + '. '), d))));
+}
 const keyOf = r => r.p + r.ph;
 // Marking for The Draw. colOk: picked the column the question points to. na: that thinker's thesis does not bear on the policy.
 function mark(r, ans) {
@@ -536,10 +618,13 @@ function questionCard(r, big) {
     $('div', {class: 'row'}, $('span', {class: 'mute'}, 'Argue as'), $('span', {class: 'chip'}, PHIL[r.ph].name), $('span', {class: 'mute small'}, PHIL[r.ph].thinkers)));
 }
 function topicCard(r, big) {
-  return $('div', {class: 'policy' + (big ? ' big' : '')}, $('div', {class: 'label'}, 'Policy'), $('div', {class: 'title', style: 'margin-bottom:0'}, POL[r.p].t));
+  const P = POL[r.p];
+  return $('div', {class: 'policy' + (big ? ' big' : '')},
+    $('div', {class: 'label'}, 'Stimulus · ' + (P.real ? 'real' : 'hypothetical')), $('p', {class: 'stim'}, P.stim),
+    $('div', {class: 'label'}, 'Question'), $('div', {class: 'title', style: 'margin-bottom:0'}, P.q));
 }
-function argLines(p1, p2, c) {
-  return $('div', {class: 'arg'}, $('b', {}, 'P1'), $('div', {}, p1), $('b', {}, 'P2'), $('div', {}, p2 || '—'), $('b', {}, 'C'), $('div', {}, c || '—'));
+function argLines(p1, p2, c, kc) {
+  return $('div', {class: 'arg'}, $('b', {}, 'P1'), $('div', {}, p1, kc && $('div', {class: 'kc'}, kc)), $('b', {}, 'P2'), $('div', {}, p2 || '—'), $('b', {}, 'C'), $('div', {}, c || '—'));
 }
 // Model answers for the question's column: the chosen thinker first, then the other thinker where the cell is split.
 function modelBox(r, prefer) {
@@ -549,7 +634,7 @@ function modelBox(r, prefer) {
     $('div', {class: 'label'}, names.length > 1 ? 'Model answers' : 'Model answer'),
     names.map((w, i) => { const t = e.t[w]; return $('div', {style: i ? 'margin-top:14px;padding-top:12px;border-top:1px solid var(--line)' : ''},
       $('div', {}, $('span', {class: 'tag'}, COLS[col] + ' · ' + w), $('span', {class: 'tag'}, VERD[t.v[0]])),
-      argLines(thesis(r.ph, col, w), t.p2, t.c),
+      argLines(thesis(r.ph, col, w), t.p2, t.c, kcOf(r.ph, col, w)),
       t.alt && $('p', {class: 'small mute', style: 'margin:6px 0 0'}, t.alt)); }),
     Object.entries(e.na || {}).map(([w, why]) => $('p', {class: 'small mute', style: 'margin:12px 0 0'}, why)));
 }
@@ -560,15 +645,16 @@ function drawForm(r, ans, locked, onDone, rerender) {
   const ready = () => ans.col != null && (c.length === 1 || ans.who) && ans.v && (ans.p2 || '').trim() && (ans.c || '').trim();
   const sub = $('button', {class: 'btn primary', disabled: !ready(), onclick: () => onDone()}, 'Submit');
   const upd = () => { sub.disabled = !ready(); };
+  if (!locked) box.append($('details', {class: 'kcbox', open: !!ans.kcOpen, ontoggle: e => { ans.kcOpen = e.target.open; }}, $('summary', {}, 'Key concepts: ' + PHIL[r.ph].name), conceptList(r.ph)));
   box.append(
     $('div', {class: 'step'}, $('div', {class: 'label'}, '1 · Which issue does the question point to? Pick the poster column.'),
       $('div', {class: 'cols'}, COLS.map((n, i) => $('button', {class: 'choice' + (ans.col === i ? ' sel' : ''), disabled: locked,
         onclick: () => { ans.col = i; ans.who = null; rerender(); }}, $('span', {class: 'n'}, i + 1), n)))));
   if (c) {
-    if (c.length === 1) box.append($('div', {class: 'thesis'}, $('div', {class: 'who'}, 'P1 · ' + c[0][0]), c[0][1]));
+    if (c.length === 1) box.append($('div', {class: 'thesis'}, $('div', {class: 'who'}, avatar(c[0][0]), 'P1 · ' + c[0][0]), c[0][1], $('div', {class: 'kc'}, kcOf(r.ph, ans.col, c[0][0]))));
     else box.append($('p', {class: 'small mute', style: 'margin:10px 0 0'}, 'The thinkers split here. Choose your P1.'),
       $('div', {class: 'pick2'}, c.map(([w, t]) => $('button', {class: 'choice' + (ans.who === w ? ' sel' : ''), disabled: locked,
-        onclick: () => { ans.who = w; rerender(); }}, $('div', {class: 'thesis', style: 'margin:0;background:none;padding:0 0 0 10px'}, $('div', {class: 'who'}, 'P1 · ' + w), t)))));
+        onclick: () => { ans.who = w; rerender(); }}, $('div', {class: 'thesis', style: 'margin:0;background:none;padding:0 0 0 10px'}, $('div', {class: 'who'}, avatar(w), 'P1 · ' + w), t, $('div', {class: 'kc'}, kcOf(r.ph, ans.col, w)))))));
   }
   box.append(
     $('div', {class: 'step'}, $('div', {class: 'label'}, '2 · Verdict'),
@@ -588,7 +674,7 @@ function drawResult(r, ans, ai) {
       $('div', {class: 'label'}, 'Your argument'),
       $('div', {}, $('span', {class: 'tag ' + (m.p1 ? 'ok' : 'bad')}, (m.p1 ? '✓ ' : '✗ ') + COLS[ans.col] + ' · ' + m.who),
         $('span', {class: 'tag ' + (m.v ? 'ok' : 'bad')}, (m.v ? '✓ ' : '✗ ') + VERD[ans.v])),
-      argLines(thesis(r.ph, ans.col, m.who), ans.p2, ans.c),
+      argLines(thesis(r.ph, ans.col, m.who), ans.p2, ans.c, kcOf(r.ph, ans.col, m.who)),
       !m.colOk && $('p', {class: 'small', style: 'margin:8px 0 0'}, $('b', {}, 'The question points to ' + COLS[P.col] + ': '), P.why),
       m.na && $('p', {class: 'small', style: 'margin:8px 0 0'}, e.na[m.who]),
       $('p', {class: 'small mute', style: 'margin:8px 0 0'}, 'Compare your P2 and C with the model: does your P2 use the stimulus to connect P1 to the question, and does C follow?')),
@@ -606,7 +692,8 @@ function whoResult(r, ans) {
   const e = entryOf(r), ok = ans.pick === r.ph;
   return $('div', {class: 'model', style: philStyle(r.ph)},
     ans.pick && $('div', {}, $('span', {class: 'tag ' + (ok ? 'ok' : 'bad')}, (ok ? '✓ ' : '✗ ') + PHIL[ans.pick].name)),
-    $('p', {}, $('b', {}, PHIL[r.ph].name + ' (' + e.st[1] + '). '), 'The speaker reasons from: “' + thesis(r.ph, e.st[0], e.st[1]) + '”'),
+    $('p', {style: 'margin-bottom:4px'}, avatar(e.st[1]), $('b', {}, PHIL[r.ph].name + ' (' + e.st[1] + '). '), 'The speaker reasons from: “' + thesis(r.ph, e.st[0], e.st[1]) + '”'),
+    $('p', {class: 'kc', style: 'margin:0 0 10px'}, kcOf(r.ph, e.st[0], e.st[1])),
     $('p', {style: 'margin:0'}, $('b', {}, 'Not ' + PHIL[e.nm[0]].name + ': '), e.nm[1]));
 }
 
@@ -614,7 +701,7 @@ function whoResult(r, ans) {
 function home(msg) {
   const code = $('input', {type: 'text', placeholder: 'Room code', maxlength: 4, style: 'text-transform:uppercase;max-width:150px', value: new URLSearchParams(location.search).get('room') || ''});
   const soloCard = (mode, blurb) => { const n = SETS[mode].length, d = SETS[mode].filter((_, s) => { const x = stats(mode, s); return x.done === x.n; }).length;
-    return $('div', {class: 'card'}, $('h2', {}, MODE[mode].name), $('p', {class: 'small mute'}, blurb),
+    return $('div', {class: 'card c-' + mode}, $('h2', {}, MODE[mode].name), $('p', {class: 'small mute'}, blurb),
       $('div', {class: 'row'}, $('button', {class: 'btn primary', onclick: () => setList(mode)}, 'Choose a set'), $('span', {class: 'small mute'}, `${d} of ${n} sets done`))); };
   mount($('div', {},
     $('h1', {}, 'The Draw'),
@@ -623,12 +710,23 @@ function home(msg) {
     $('div', {class: 'home'},
       soloCard('draw', 'A stimulus, a question and a philosophy. Pick the issue, take a verdict and write the argument. 12 sets of 4.'),
       soloCard('who', 'Read a speech about a policy and name the philosophy behind it. 8 sets of 6.'),
-      $('div', {class: 'card', style: 'grid-column:1/-1'}, $('h2', {}, 'Class'),
+      $('div', {class: 'card c-class', style: 'grid-column:1/-1'}, $('h2', {}, 'Class'),
         $('p', {class: 'small mute'}, 'Join your teacher’s room with the code on the board. Your answers appear on the class screen without your name.'),
         $('div', {class: 'row'}, code, $('button', {class: 'btn primary', onclick: () => join(code.value.trim().toUpperCase())}, 'Join'),
           $('span', {class: 'grow'}), $('button', {class: 'btn link', onclick: host}, 'I’m the teacher: host a room')))),
+    $('div', {class: 'home'}, $('div', {class: 'card c-kc', style: 'grid-column:1/-1'}, $('div', {class: 'row'}, $('div', {class: 'grow'}, $('h2', {style: 'margin:0'}, 'Key concepts'),
+      $('span', {class: 'small mute'}, 'The ideas behind every thesis, for all eight thinkers.')), $('button', {class: 'btn', onclick: conceptsPage}, 'Open')))),
     $('p', {class: 'small mute'}, 'Your solo progress is saved in this browser on this device.'),
     !FIREBASE_CONFIG && $('p', {class: 'note'}, 'Class mode is in demo mode: the host and students must be tabs in the same browser on this device.')));
+}
+
+function conceptsPage() {
+  mount($('div', {},
+    $('div', {class: 'row'}, $('button', {class: 'btn link', onclick: () => home()}, '← Home')),
+    $('h1', {}, 'Eight thinkers: the key concepts'),
+    $('p', {class: 'mute'}, 'Learn these first. Every thesis on the Six Issues poster is one of these concepts applied to an issue, or follows from one.'),
+    PK.map(ph => $('div', {class: 'policy', style: philStyle(ph) + ';background:#fff;border:1px solid var(--line);border-left:6px solid var(--pc)'},
+      $('span', {class: 'chip'}, PHIL[ph].name), conceptList(ph)))));
 }
 
 /* ============================ SOLO ============================ */
@@ -762,6 +860,9 @@ QUESTION: ${P.q}
 
 POSTER THESES FOR ${PHIL[r.ph].name.toUpperCase()}, by issue and thinker:
 ${row}
+
+KEY CONCEPTS BEHIND THOSE THESES:
+${THINKERS[r.ph].map(w => CONCEPTS[w].map(([n, d]) => `- ${w}, ${n}: ${d}`).join('\n')).join('\n')}
 
 MODEL ANSWER(S). The answer key expects the issue "${COLS[P.col]}":
 ${models}
